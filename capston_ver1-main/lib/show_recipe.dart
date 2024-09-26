@@ -10,23 +10,27 @@ class ShowRecipeWithIngredients extends StatefulWidget {
     super.key,
     required this.recipes,
     required this.resultData,
+    required this.allergens,
+    required this.restrictions
   });
 
   State<ShowRecipeWithIngredients> createState() => _SearchRecipeScreenState();
 
-   final List<RecipeModel> recipes;
+  final List<RecipeModel> recipes;
   List<RecipeModel> filteredRecipes = [];
   final List<String> resultData;
   List<RecipeModel> filteredRecipe = [];
+  final allergens;
+  final restrictions;
  
-
 }
 
 class _SearchRecipeScreenState extends State<ShowRecipeWithIngredients> {
   late List<RecipeModel> _filteredRecipes;
   List<RecipeModel> _filteredRecipe = [];
-  String allergens = AlleresProvider().allergens;
-  String restrictions = AlleresProvider().restrictions;
+  
+  var filtered = []; 
+  
 
   void filterRecipe(String value) {
     setState(() {
@@ -44,12 +48,11 @@ class _SearchRecipeScreenState extends State<ShowRecipeWithIngredients> {
           return recipe.ingredients.toLowerCase().contains(ingredient);
         }).toList();
         
-        print(allergens);
-        print(restrictions);
+        print(widget.allergens);
 
         _filteredRecipe.addAll(_filteredRecipes);
       }
-      _filteredRecipe.toSet().toList();
+      filtered = _filteredRecipe.toSet().toList();
     });
   }
 
@@ -57,6 +60,7 @@ class _SearchRecipeScreenState extends State<ShowRecipeWithIngredients> {
   void initState() {
     _filterRecipes(widget.resultData);
     super.initState();
+    print(widget.allergens);
   }
 
   @override
@@ -87,11 +91,11 @@ class _SearchRecipeScreenState extends State<ShowRecipeWithIngredients> {
       ),
       body: Container(
         padding: const EdgeInsets.all(10),
-        child: _filteredRecipe.isNotEmpty
+        child: filtered.isNotEmpty
             ? ListView.builder(
-                itemCount: _filteredRecipe.length,
+                itemCount: filtered.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return RecipeWidget(_filteredRecipe[index]);
+                  return RecipeWidget(filtered[index]);
                 },
               )
             : const Center(

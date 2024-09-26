@@ -8,6 +8,7 @@ import 'package:flutter_pytorch/pigeon.dart';
 import 'package:flutter_pytorch/flutter_pytorch.dart';
 import 'package:provider/provider.dart';
 import 'package:recipe_page_new/LoaderState.dart';
+import 'package:recipe_page_new/providers/alleres_provider.dart';
 import 'package:recipe_page_new/providers/recipe_provider.dart';
 import 'package:recipe_page_new/show_recipe.dart';
 
@@ -123,54 +124,89 @@ class _HomeScreenState extends State<detect_object_page> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<RecipeClass>(
-        builder: (BuildContext context, myProvider, Widget? child) => Scaffold(
-              body: Center(
-                child: Column(
+    final myProvider = Provider.of<RecipeClass>(context);
+    final allergensProvider = Provider.of<AlleresProvider>(context);
+
+    return Scaffold(
+          bottomNavigationBar: BottomAppBar(
+                color: Colors.lightGreen,
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    !firststate
-                        ? !message
-                            ? LoaderState()
-                            : Text("Select the Camera to Begin Detections")
-                        : Expanded(
-                            child: Container(
-                              child: _objectModel.renderBoxesOnImage(
-                                  _image!, objDetect),
-                            ),
-                          ),
-                    SizedBox(
-                      height: 100,
-                    ),
                     ElevatedButton(
-                      onPressed: () {
-                        runObjectDetectionAgain();
-                      },
-                      child: Text('Retake Photo'),
-                    ),
-                    SizedBox(
-                      height: 80,
-                    ),
-                    SizedBox(
-                      height: 100,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ShowRecipeWithIngredients(
-                                    resultData: classNames,
-                                    recipes: myProvider.allRecipes,
-                                  )),
-                        );
-                      },
-                      child: const Text('View Recipe'),
-                    ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => detect_object_page()));
+                        },
+                        child: const Icon(Icons.camera)),
                   ],
                 ),
               ),
-            ));
+              body: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    colors: [
+                      Colors.green,
+                      Colors.lightGreen
+                    ])
+                ),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      !firststate
+                          ? !message
+                              ? LoaderState()
+                              : Text("Select the Camera to Begin Detections")
+                          : Expanded(
+                              child: Container(
+                                child: _objectModel.renderBoxesOnImage(
+                                    _image!, objDetect),
+                              ),
+                            ),
+                      const SizedBox(
+                        height: 100,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          runObjectDetectionAgain();
+                        },
+                        child: Text('Retake Photo'),
+                      ),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          
+                          Navigator.of(context).push(
+  MaterialPageRoute(
+    builder: (context) => MultiProvider(
+      providers: [
+        Provider.value(value: myProvider),  // Passing RecipeClass
+        Provider.value(value: allergensProvider),  // Passing AlleresProvider
+      ],
+      child: ShowRecipeWithIngredients(
+        resultData: classNames,
+        recipes: myProvider.allRecipes, // Accessing RecipeClass data
+        allergens: allergensProvider.allergens, // Accessing AlleresProvider data
+        restrictions: allergensProvider.restrictions, // Accessing AlleresProvider data
+      ),
+    ),
+  ),
+);
+
+                        },
+                        child: const Text('View Recipe'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
   }
 }

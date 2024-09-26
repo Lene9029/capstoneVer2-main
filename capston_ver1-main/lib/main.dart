@@ -55,7 +55,7 @@ class InitApp extends StatelessWidget {
       title: 'nutrirecipe',
       home: const SplashScreen(),
       routes: {
-        '/detect_screen':(context) => const detect_object_page(),
+        
         '/favorite_recipes_screen': (context) => const FavoriteRecipesScreen(),
         '/new_recipe_screen': (context) => const NewRecipeScreen(),
         '/main_recipe_screen': (context) => const MainRecipeScreen(),        
