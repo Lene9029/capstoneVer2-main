@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -187,8 +189,9 @@ class _HomeScreenState extends State<detect_object_page> {
   MaterialPageRoute(
     builder: (context) => MultiProvider(
       providers: [
-        Provider.value(value: myProvider),  // Passing RecipeClass
-        Provider.value(value: allergensProvider),  // Passing AlleresProvider
+        Provider.value(value: myProvider.allRecipes),  // Passing RecipeClass
+        Provider.value(value: allergensProvider.allergens),
+        Provider.value(value: allergensProvider.restrictions)  // Passing AlleresProvider
       ],
       child: ShowRecipeWithIngredients(
         resultData: classNames,

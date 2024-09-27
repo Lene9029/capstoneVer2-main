@@ -116,8 +116,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       
       
       
-      AlleresProvider().updateRestrictions(restrictions);
-      AlleresProvider().updateAllergens(allergens);
+     final alleresProvider = Provider.of<AlleresProvider>(context, listen: false);
+    alleresProvider.updateAllergens(allergens);
+    alleresProvider.updateRestrictions(restrictions);
       
       Navigator.push(context, MaterialPageRoute(builder: (context) => MainRecipeScreen(),));
       
