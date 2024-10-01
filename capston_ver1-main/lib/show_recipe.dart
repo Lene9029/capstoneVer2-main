@@ -20,8 +20,8 @@ class ShowRecipeWithIngredients extends StatefulWidget {
   List<RecipeModel> filteredRecipes = [];
   final List<String> resultData;
   List<RecipeModel> filteredRecipe = [];
-  final allergens;
-  final restrictions;
+  final String allergens;
+  final String restrictions;
  
 }
 
@@ -29,12 +29,12 @@ class _SearchRecipeScreenState extends State<ShowRecipeWithIngredients> {
   late List<RecipeModel> _filteredRecipes;
   List<RecipeModel> _filteredRecipe = [];
   
-  var filtered = []; 
+  List<RecipeModel> filtered = []; 
   
 
   void filterRecipe(String value) {
     setState(() {
-      _filteredRecipes = widget.recipes
+      _filteredRecipes = filtered
           .where((recipe) =>
               recipe.name.toLowerCase().contains(value.toLowerCase()))
           .toList();
@@ -51,6 +51,13 @@ class _SearchRecipeScreenState extends State<ShowRecipeWithIngredients> {
         print(widget.allergens);
 
         _filteredRecipe.addAll(_filteredRecipes);
+
+      
+//for (var allergen in allergens) {
+ // _filteredRecipe.removeWhere((recipe) {
+  //  return recipe.ingredients.toLowerCase().contains(allergen);
+ // });
+//}
       }
       filtered = _filteredRecipe.toSet().toList();
     });

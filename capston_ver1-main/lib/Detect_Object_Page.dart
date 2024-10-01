@@ -99,31 +99,6 @@ class _HomeScreenState extends State<detect_object_page> {
     var result = classNames;
   }
 
-  Future<void> runObjectDetectionAgain() async {
-    setState(() {
-      message = false;
-    });
-
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-
-    objDetect = await _objectModel.getImagePrediction(
-      await File(image!.path).readAsBytes(),
-      minimumScore: 0.1,
-      IOUThershold: 0.3,
-    );
-
-    // Extract class names
-    classNames = [];
-    for (var detection in objDetect) {
-      classNames.add(detection?.className ?? '');
-    }
-
-    scheduleTimeout(5 * 1000);
-    setState(() {
-      _image = File(image.path);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final myProvider = Provider.of<RecipeClass>(context);
@@ -172,15 +147,6 @@ class _HomeScreenState extends State<detect_object_page> {
                             ),
                       const SizedBox(
                         height: 100,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          runObjectDetectionAgain();
-                        },
-                        child: Text('Retake Photo'),
-                      ),
-                      const SizedBox(
-                        height: 50,
                       ),
                       ElevatedButton(
                         onPressed: () {

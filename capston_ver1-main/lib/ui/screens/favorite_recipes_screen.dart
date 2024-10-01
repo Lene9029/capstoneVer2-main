@@ -53,7 +53,7 @@ class FavoriteRecipesScreen extends StatelessWidget {
                   color: !myProvider.isDark ? Colors.green : null,
                   child: const Center(
                     child: CircleAvatar(
-                      backgroundImage: AssetImage('images/food_logo.png'),
+                      backgroundImage: AssetImage('images/logo.jpg'),
                       radius: 50,
                     ),
                   ),
