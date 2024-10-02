@@ -20,8 +20,8 @@ class ShowRecipeWithIngredients extends StatefulWidget {
   List<RecipeModel> filteredRecipes = [];
   final List<String> resultData;
   List<RecipeModel> filteredRecipe = [];
-  final String allergens;
-  final String restrictions;
+  final  List<String> allergens;
+  final List<String> restrictions;
  
 }
 
@@ -30,13 +30,13 @@ class _SearchRecipeScreenState extends State<ShowRecipeWithIngredients> {
   List<RecipeModel> _filteredRecipe = [];
   
   List<RecipeModel> filtered = []; 
-  
+  List<RecipeModel> filteredrestrictions = []; 
 
   void filterRecipe(String value) {
     setState(() {
       _filteredRecipes = filtered
           .where((recipe) =>
-              recipe.name.toLowerCase().contains(value.toLowerCase()))
+              recipe.ingredients.toLowerCase().contains(value.toLowerCase()))
           .toList();
     });
   }
@@ -49,17 +49,26 @@ class _SearchRecipeScreenState extends State<ShowRecipeWithIngredients> {
         }).toList();
         
         print(widget.allergens);
+        print(widget.restrictions);
 
         _filteredRecipe.addAll(_filteredRecipes);
 
-      
-//for (var allergen in allergens) {
- // _filteredRecipe.removeWhere((recipe) {
-  //  return recipe.ingredients.toLowerCase().contains(allergen);
- // });
-//}
+          filteredrestrictions = _filteredRecipes.where((recipe) {
+      return widget.restrictions.any((restriction) =>
+        recipe.restrictions.toLowerCase().contains(restriction.toLowerCase()));
+    }).toList();
+
+      _filteredRecipes.removeWhere((recipe) {
+          for (var allergen in widget.allergens) {
+            if (recipe.allergensName.toLowerCase().contains(allergen)) {
+              return true;  
+           }
+          }
+          return false;
+        });
+
       }
-      filtered = _filteredRecipe.toSet().toList();
+      //filtered = _filteredRecipe.toSet().toList();
     });
   }
 
@@ -98,11 +107,11 @@ class _SearchRecipeScreenState extends State<ShowRecipeWithIngredients> {
       ),
       body: Container(
         padding: const EdgeInsets.all(10),
-        child: filtered.isNotEmpty
+        child: filteredrestrictions.isNotEmpty
             ? ListView.builder(
-                itemCount: filtered.length,
+                itemCount: filteredrestrictions.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return RecipeWidget(filtered[index]);
+                  return RecipeWidget(filteredrestrictions[index]);
                 },
               )
             : const Center(

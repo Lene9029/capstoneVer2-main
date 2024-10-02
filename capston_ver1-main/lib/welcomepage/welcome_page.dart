@@ -39,8 +39,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   int _currentPage = 0;
 
   final List<String> _allergenchoices = [
-    'Peanut',
-    'Cashew Nuts',
+    'peanut',
+    'cashew Nuts',
     'Milk',
     'Eggs',
     'Wheat',
@@ -81,18 +81,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     
   }
 
-  String getSelectedAllergens() {
-    List<String> selectedAllergenChoices = [];
+  List<String> getSelectedAllergens() {
+  List<String> selectedAllergenChoices = [];
 
-    for (int i = 0; i < _allergenchoices.length; i++) {
-      if (_selectedAllergenChoices[i]) {
-        selectedAllergenChoices.add(_allergenchoices[i]);
-      }
+  for (int i = 0; i < _allergenchoices.length; i++) {
+    if (_selectedAllergenChoices[i]) {
+      selectedAllergenChoices.add(_allergenchoices[i]);
     }
-    return selectedAllergenChoices.join(', ');
   }
 
-  String getSelectedRestrictions(){
+  return selectedAllergenChoices;  // Return the list instead of joining it
+}
+
+
+  List<String> getSelectedRestrictions(){
     List<String> selectedRestrictionsChoices = [];
 
     for (int i = 0; i < restrictionsChoices.length; i++){
@@ -100,7 +102,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         selectedRestrictionsChoices.add(restrictionsChoices[i]);
       }
     }
-    return selectedRestrictionsChoices.join(',');
+    return selectedRestrictionsChoices;
   }
 
   void _nextPage() {
@@ -111,8 +113,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         curve: Curves.easeIn,
       );
     } else {
-      String allergens = getSelectedAllergens();
-      String restrictions = getSelectedRestrictions();
+      List<String> allergens = getSelectedAllergens();
+      List<String> restrictions = getSelectedRestrictions();
       
       
       

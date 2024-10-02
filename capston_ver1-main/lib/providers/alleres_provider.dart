@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 class AlleresProvider extends ChangeNotifier {
-  String allergens = '';
-  String restrictions = '';
+  List<String> allergens = [];
+  List<String> restrictions =[];
 
   
 
-  void updateAllergens(String selectedAllergens) {
+  void updateAllergens(List<String> selectedAllergens) {
     allergens = selectedAllergens;
     notifyListeners();
   }
 
-  void updateRestrictions(String selectedRestrictions) {
+  void updateRestrictions(List<String> selectedRestrictions) {
     restrictions = selectedRestrictions;
     notifyListeners();
   }
