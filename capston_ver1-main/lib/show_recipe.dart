@@ -29,12 +29,14 @@ class _SearchRecipeScreenState extends State<ShowRecipeWithIngredients> {
   late List<RecipeModel> _filteredRecipes;
   List<RecipeModel> _filteredRecipe = [];
   
-  List<RecipeModel> filtered = []; 
+  List<RecipeModel> filteredFinal = []; 
   List<RecipeModel> filteredrestrictions = []; 
+  List<RecipeModel> filteredA = [];
+  List<RecipeModel> filteredR = []; 
 
   void filterRecipe(String value) {
     setState(() {
-      _filteredRecipes = filtered
+      _filteredRecipes = filteredFinal
           .where((recipe) =>
               recipe.ingredients.toLowerCase().contains(value.toLowerCase()))
           .toList();
@@ -53,22 +55,21 @@ class _SearchRecipeScreenState extends State<ShowRecipeWithIngredients> {
 
         _filteredRecipe.addAll(_filteredRecipes);
 
-          filteredrestrictions = _filteredRecipes.where((recipe) {
-      return widget.restrictions.any((restriction) =>
-        recipe.restrictions.toLowerCase().contains(restriction.toLowerCase()));
-    }).toList();
+        filteredA = _filteredRecipes.where((recipe) {
+  return !widget.allergens.any((allergen) =>
+      recipe.allergensName.toLowerCase().contains(allergen.toLowerCase()));
+}).toList();
 
-      _filteredRecipes.removeWhere((recipe) {
-          for (var allergen in widget.allergens) {
-            if (recipe.allergensName.toLowerCase().contains(allergen)) {
-              return true;  
-           }
-          }
-          return false;
-        });
+        
+        
+
+filteredR = filteredA.where((recipe) {
+  return !widget.restrictions.any((restriction) =>
+      recipe.restrictions.toLowerCase().contains(restriction.toLowerCase()));
+}).toList();
 
       }
-      //filtered = _filteredRecipe.toSet().toList();
+      filteredFinal = filteredR.toSet().toList();
     });
   }
 
@@ -107,11 +108,11 @@ class _SearchRecipeScreenState extends State<ShowRecipeWithIngredients> {
       ),
       body: Container(
         padding: const EdgeInsets.all(10),
-        child: filteredrestrictions.isNotEmpty
+        child: filteredFinal.isNotEmpty
             ? ListView.builder(
-                itemCount: filteredrestrictions.length,
+                itemCount: filteredFinal.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return RecipeWidget(filteredrestrictions[index]);
+                  return RecipeWidget(filteredFinal[index]);
                 },
               )
             : const Center(
