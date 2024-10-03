@@ -39,8 +39,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   int _currentPage = 0;
 
   final List<String> _allergenchoices = [
-    'peanut',
-    'cashew Nuts',
+    'Peanut',
+    'Cashew Nuts',
     'Milk',
     'Eggs',
     'Wheat',
@@ -204,10 +204,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'Select Options:',
+              'Select Your Allergens',
               style: TextStyle(fontSize: 20),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Wrap(
               spacing: 8.0,
               children: List<Widget>.generate(
@@ -238,7 +238,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          const Text('Dietary Restrictions:'),
+          const Text('Select Your Dietary Restrictions'),
           SizedBox(height: 20,),
           Wrap(
             spacing: 8.0,
@@ -264,10 +264,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 }
 
   Widget _buildPage4() {
-    return Center(
+    return const Center(
       child: Text(
-        'Thank you for using our app!',
-        style: TextStyle(fontSize: 24),
+        'Lets Get Started',
+        style: TextStyle(fontSize: 30),
       ),
     );
   }
