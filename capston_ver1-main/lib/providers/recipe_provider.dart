@@ -23,6 +23,8 @@ class RecipeClass extends ChangeNotifier {
   TextEditingController ingredientsController = TextEditingController();
   TextEditingController allergensNameController = TextEditingController();
   TextEditingController restrictionsController = TextEditingController();
+  TextEditingController allergenStatementController = TextEditingController();
+  TextEditingController restrictionStatementController = TextEditingController();
   File? image;
 
   List<RecipeModel> allRecipes = [];
@@ -43,6 +45,8 @@ class RecipeClass extends ChangeNotifier {
         instructions: instructionsController.text,
         allergensName: allergensNameController.text,
         restrictions: restrictionsController.text,
+        allergenStatement: allergenStatementController.text,
+        restrictionStatement: restrictionStatementController.text,
         preperationTime: int.parse(preperationTimeController.text != ''
             ? preperationTimeController.text
             : '0'));
@@ -64,7 +68,7 @@ class RecipeClass extends ChangeNotifier {
     DbHelper.dbHelper.deleteRecipe(recipeModel);
     getRecipes();
   }
-   Future<void> filterRecipes(String value) async {
+   Future<void> filterAllRecipes(String value) async {
     allRecipes = await DbHelper.dbHelper.getAllRecipes();
     allRecipes = allRecipes.where((recipe) =>
       recipe.name.toLowerCase().contains(value.toLowerCase())

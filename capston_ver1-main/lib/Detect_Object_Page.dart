@@ -103,59 +103,48 @@ class _HomeScreenState extends State<detect_object_page> {
     final allergensProvider = Provider.of<AlleresProvider>(context);
 
     return Scaffold(
-              body: Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                    colors: [
-                      Colors.green,
-                      Colors.lightGreen
-                    ])
-                ),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      !firststate
-                          ? !message
-                              ? LoaderState()
-                              : Text("Select the Camera to Begin Detections")
-                          : Expanded(
-                              child: Container(
-                                child: _objectModel.renderBoxesOnImage(
-                                    _image!, objDetect),
-                              ),
+              body: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    !firststate
+                        ? !message
+                            ? LoaderState()
+                            : Text("Select the Camera to Begin Detections")
+                        : Expanded(
+                            child: Container(
+                              child: _objectModel.renderBoxesOnImage(
+                                  _image!, objDetect),
                             ),
-                      const SizedBox(
-                        height: 100,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          
-                          Navigator.of(context).push(
-  MaterialPageRoute(
-    builder: (context) => MultiProvider(
-      providers: [
-        Provider.value(value: myProvider.allRecipes),  // Passing RecipeClass
-        Provider.value(value: allergensProvider.allergens),
-        Provider.value(value: allergensProvider.restrictions)  // Passing AlleresProvider
-      ],
-      child: ShowRecipeWithIngredients(
-        resultData: classNames,
-        recipes: myProvider.allRecipes, // Accessing RecipeClass data
-        allergens: allergensProvider.allergens, // Accessing AlleresProvider data
-        restrictions: allergensProvider.restrictions, // Accessing AlleresProvider data
-      ),
-    ),
-  ),
-);
-
-                        },
-                        child: const Text('View Recipe'),
-                      ),
+                          ),
+                    const SizedBox(
+                      height: 100,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        
+                        Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => MultiProvider(
+                    providers: [
+                      Provider.value(value: myProvider.allRecipes),  // Passing RecipeClass
+                      Provider.value(value: allergensProvider.allergens),
+                      Provider.value(value: allergensProvider.restrictions)  // Passing AlleresProvider
                     ],
+                    child: ShowRecipeWithIngredients(
+                      resultData: classNames,
+                      recipes: myProvider.allRecipes, // Accessing RecipeClass data
+                      allergens: allergensProvider.allergens, // Accessing AlleresProvider data
+                      restrictions: allergensProvider.restrictions, // Accessing AlleresProvider data
+                    ),
                   ),
+                ),
+              );
+              
+                      },
+                      child: const Text('View Recipe'),
+                    ),
+                  ],
                 ),
               ),
             );

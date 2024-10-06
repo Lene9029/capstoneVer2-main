@@ -39,7 +39,7 @@ class RecipeWidget extends StatelessWidget {
                       child: const Center(
                         child: CircleAvatar(
                           backgroundImage: AssetImage('images/food_logo.png'),
-                          radius: 35, // Adjust the radius as needed
+                          radius: 35, 
                         ),
                       ),
                     )

@@ -238,6 +238,64 @@ class ShowRecipeScreen extends StatelessWidget {
                         ],
                       ),
                     ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          color: !Provider.of<RecipeClass>(context).isDark
+                              ? Colors.green
+                              : null,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Allergen Statement',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            recipeModel.allergenStatement,
+                            style: const TextStyle(fontSize: 26),
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          color: !Provider.of<RecipeClass>(context).isDark
+                              ? Colors.green
+                              : null,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Restriction Statement',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            recipeModel.restrictionStatement,
+                            style: const TextStyle(fontSize: 26),
+                          )
+                        ],
+                      ),
+                    ),
                      
                     
                   ]),

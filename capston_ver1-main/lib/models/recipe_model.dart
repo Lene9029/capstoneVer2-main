@@ -42,7 +42,9 @@ class RecipeModel {
       'instructions': instructions,
       'image': image == null ? '' : image!.path,
       'allergenName': allergensName,
-      'restrictions': restrictions
+      'restrictions': restrictions,
+      'allergenStatement': allergenStatement,
+      'restrictionStatement': restrictionStatement
     };
   }
 
@@ -56,6 +58,8 @@ class RecipeModel {
         instructions: map['instructions'],
         allergensName: map['allergenName'],
         restrictions: map['restrictions'],
+        allergenStatement: map['allergenStatement'] ?? '',
+        restrictionStatement: map['restrictionStatement'] ?? '',
         image: map['image'] != null ? File(map['image']) : null);
         
   }

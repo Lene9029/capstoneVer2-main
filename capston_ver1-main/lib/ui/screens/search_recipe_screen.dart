@@ -21,7 +21,7 @@ class _SearchRecipeScreenState extends State<SearchRecipeScreen> {
     setState(() {
       widget.filteredRecipes = widget.recipes
           .where((recipe) =>
-              recipe.name.toLowerCase().contains(value.toLowerCase()))
+              recipe.ingredients.toLowerCase().contains(value.toLowerCase()))
           .toList();
     });
   }

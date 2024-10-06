@@ -2,10 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:recipe_page_new/data_repository/dbHelper.dart';
 import 'package:recipe_page_new/main_page.dart';
 import 'package:recipe_page_new/models/recipe_model.dart';
 import 'package:recipe_page_new/providers/recipe_provider.dart';
+import 'package:recipe_page_new/ui/widgets/newrecipe_widget.dart';
 import '../widgets/recipe_widget.dart';
 
 class MainRecipeScreen extends StatefulWidget {
@@ -32,7 +32,7 @@ class _MainRecipeScreenState extends State<MainRecipeScreen> {
             onPressed: (() async {
               await Navigator.pushNamed(context, '/new_recipe_screen');
               Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage()));
-              DbHelper().addNewColumn;
+              
             }),
             child: const Icon(Icons.add),
           ),
@@ -96,7 +96,7 @@ class _MainRecipeScreenState extends State<MainRecipeScreen> {
                           ),
                         ),
                         onChanged: (value) {
-                          myProvider.filterRecipes(value);
+                          myProvider.filterAllRecipes(value);
                         },
                       ),
                     ),
@@ -105,16 +105,16 @@ class _MainRecipeScreenState extends State<MainRecipeScreen> {
               ),
               Expanded(
   child: GridView.builder(
-    padding: const EdgeInsets.all(10), // Padding around the grid
+    padding: const EdgeInsets.all(10),
     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
       crossAxisCount: 2, // Number of columns in the grid
-      childAspectRatio: 0.75, // Aspect ratio of each grid item
+      childAspectRatio: 0.8, // Aspect ratio of each grid item
       crossAxisSpacing: 10, // Horizontal spacing between grid items
       mainAxisSpacing: 10, // Vertical spacing between grid items
     ),
-    itemCount: myProvider.allRecipes.length, // Total number of items
+    itemCount: myProvider.allRecipes.length, 
     itemBuilder: (context, index) {
-      return RecipeWidget(myProvider.allRecipes[index]); // Your RecipeWidget
+      return NewRecipeWidget(myProvider.allRecipes[index]); 
     },
   ),
 ),

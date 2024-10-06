@@ -26,17 +26,14 @@ class DbHelper {
     database = await connectToDatabase();
     
   }
-  
-    Future<void> addNewColumn(Database db) async {
-  
-      await db.execute('ALTER TABLE $tableName ADD COLUMN $allergenStatement TEXT');
-    
 
-    await db.execute('ALTER TABLE $tableName ADD COLUMN $restrictionStatement TEXT');
-  }
- 
+   
+  Future<void> addNewColumn() async {
+     database = await connectToDatabase();
+    database.execute('ALTER TABLE $tableName ADD COLUMN $allergenStatement TEXT');
   
-    
+    database.execute('ALTER TABLE $tableName ADD COLUMN $restrictionStatement TEXT');
+  } 
       
   Future<Database> connectToDatabase() async {
     Directory directory = await getApplicationDocumentsDirectory();
@@ -46,12 +43,12 @@ class DbHelper {
       version: 1,
       onCreate: (db, version) {
         db.execute(
-            'CREATE TABLE $tableName ($idColumn INTEGER PRIMARY KEY AUTOINCREMENT, $nameColumn TEXT, $preperationTimeColumn INTEGER, $isFavoriteColumn INTEGER, $ingredientsColumn TEXT, $instructionsColumn TEXT, $imageColumn TEXT, $allergensName TEXT, $restrictions TEXT)');
+            'CREATE TABLE $tableName ($idColumn INTEGER PRIMARY KEY AUTOINCREMENT, $nameColumn TEXT, $preperationTimeColumn INTEGER, $isFavoriteColumn INTEGER, $ingredientsColumn TEXT, $instructionsColumn TEXT, $imageColumn TEXT, $allergensName TEXT, $restrictions TEXT, $allergenStatement TEXT, $restrictionStatement TEXT)');
             
       },
       onUpgrade: (db, oldVersion, newVersion) {
         db.execute(
-            'CREATE TABLE $tableName ($idColumn INTEGER PRIMARY KEY AUTOINCREMENT, $nameColumn TEXT, $preperationTimeColumn INTEGER, $isFavoriteColumn INTEGER, $ingredientsColumn TEXT, $instructionsColumn TEXT, $imageColumn TEXT,  $allergensName TEXT, $restrictions TEXT)');
+            'CREATE TABLE $tableName ($idColumn INTEGER PRIMARY KEY AUTOINCREMENT, $nameColumn TEXT, $preperationTimeColumn INTEGER, $isFavoriteColumn INTEGER, $ingredientsColumn TEXT, $instructionsColumn TEXT, $imageColumn TEXT, $allergensName TEXT, $restrictions TEXT, $allergenStatement TEXT, $restrictionStatement TEXT)');
         
       },
       onDowngrade: (db, oldVersion, newVersion) {
@@ -94,7 +91,9 @@ class DbHelper {
           ingredientsColumn: recipeModel.ingredients,
           instructionsColumn: recipeModel.instructions,
           allergensName: recipeModel.allergensName,
-          restrictions: recipeModel.restrictions
+          restrictions: recipeModel.restrictions,
+          allergenStatement: recipeModel.allergenStatement,
+          restrictionStatement: recipeModel.restrictionStatement
         },
         where: '$idColumn=?',
         whereArgs: [recipeModel.id]);
