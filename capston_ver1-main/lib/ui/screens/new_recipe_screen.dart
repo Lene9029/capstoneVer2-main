@@ -63,8 +63,8 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                               PopupMenuItem(
                                 onTap: (() =>
                                     pickImage(context, ImageSource.camera)),
-                                child: Row(
-                                  children: const [
+                                child: const Row(
+                                  children:[
                                     Icon(Icons.camera_alt_outlined),
                                     SizedBox(
                                       width: 5,
@@ -76,8 +76,8 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                               PopupMenuItem(
                                 onTap: (() =>
                                     pickImage(context, ImageSource.gallery)),
-                                child: Row(
-                                  children: const [
+                                child: const Row(
+                                  children: [
                                     Icon(Icons.image_outlined),
                                     SizedBox(
                                       width: 5,

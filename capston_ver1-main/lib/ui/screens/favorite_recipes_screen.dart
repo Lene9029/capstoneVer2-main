@@ -1,10 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
 import 'package:recipe_page_new/ui/screens/search_recipe_screen.dart';
-
 import '../../providers/recipe_provider.dart';
 import '../widgets/recipe_widget.dart';
 
@@ -16,23 +12,14 @@ class FavoriteRecipesScreen extends StatelessWidget {
       builder: (BuildContext context, myProvider, Widget? child) {
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.green,
-            title: Column(
+            backgroundColor: Colors.lightGreen,
+            title: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('My Recipes'),
-                const SizedBox(
+                Text('Favorite Recipes'),
+                SizedBox(
                   height: 4,
                 ),
-                Text(
-                  'Favorite Recipes:',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: !myProvider.isDark
-                        ? Colors.black
-                        : null,
-                  ),
-                )
               ],
             ),
             actions: [
@@ -43,89 +30,20 @@ class FavoriteRecipesScreen extends StatelessWidget {
                   child: const Icon(Icons.search)),
             ],
           ),
-          drawer: Drawer(
-            backgroundColor: !myProvider.isDark ? Colors.lightGreen : null,
-            child: Column(
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 200,
-                  color: !myProvider.isDark ? Colors.green : null,
-                  child: const Center(
-                    child: CircleAvatar(
-                      backgroundImage: AssetImage('images/logo.jpg'),
-                      radius: 50,
-                    ),
-                  ),
-                ),
-                ListTile(
-                  title: const Text('Home'),
-                  leading: const Icon(
-                    Icons.home,
-                    color: Colors.black,
-                  ),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/main_recipe_screen');
-                  },
-                ),
-                ListTile(
-                  title: const Text('Favorite Recipes'),
-                  leading: const Icon(
-                    Icons.favorite,
-                    color: Colors.red,
-                  ),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/favorite_recipes_screen');
-                  },
-                ),
-                const Divider(
-                  thickness: 1,
-                ),
-                Provider.of<RecipeClass>(context).isDark
-                    ? ListTile(
-                        title: const Text('Light Mode'),
-                        leading: const Icon(
-                          Icons.light_mode_outlined,
-                          color: Colors.black,
-                        ),
-                        onTap: () {
-                          Provider.of<RecipeClass>(context, listen: false)
-                              .changeIsDark();
-                          Navigator.pop(context);
-                        },
-                      )
-                    : ListTile(
-                        title: const Text('Change Theme'),
-                        leading: const Icon(
-                          Icons.dark_mode_outlined,
-                          color: Colors.black,
-                        ),
-                        onTap: () {
-                          Provider.of<RecipeClass>(context, listen: false)
-                              .changeIsDark();
-                          Navigator.pop(context);
-                        },
-                      ),
-              ],
-            ),
-          ),
-          body: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                colors: [
-                  Colors.green,
-                  Colors.lightGreen
-                ]
-                ),
-            ),
-            child: ListView.builder(
-                itemCount: myProvider.favoriteRecipes.length,
-                itemBuilder: (context, index) {
-                  return RecipeWidget(myProvider.favoriteRecipes[index]);
-                }),
-          ),
+          body: GridView.builder(
+    padding: const EdgeInsets.all(10), // Padding around the grid
+    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: 2, // Number of columns in the grid
+      childAspectRatio: 0.75, // Aspect ratio of each grid item
+      crossAxisSpacing: 10, // Horizontal spacing between grid items
+      mainAxisSpacing: 10, // Vertical spacing between grid items
+    ),
+    itemCount: myProvider.favoriteRecipes.length, // Total number of items
+    itemBuilder: (context, index) {
+      return RecipeWidget(myProvider.favoriteRecipes[index]); // Your RecipeWidget
+    },
+  ),
+          
         );
       },
     );

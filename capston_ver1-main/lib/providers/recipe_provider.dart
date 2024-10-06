@@ -27,6 +27,7 @@ class RecipeClass extends ChangeNotifier {
 
   List<RecipeModel> allRecipes = [];
   List<RecipeModel> favoriteRecipes = [];
+  List<RecipeModel> filteredRecipes = [];
   getRecipes() async {
     allRecipes = await DbHelper.dbHelper.getAllRecipes();
     favoriteRecipes = allRecipes.where((e) => e.isFavorite).toList();
@@ -63,4 +64,12 @@ class RecipeClass extends ChangeNotifier {
     DbHelper.dbHelper.deleteRecipe(recipeModel);
     getRecipes();
   }
+   Future<void> filterRecipes(String value) async {
+    allRecipes = await DbHelper.dbHelper.getAllRecipes();
+    allRecipes = allRecipes.where((recipe) =>
+      recipe.name.toLowerCase().contains(value.toLowerCase())
+    ).toList();
+    notifyListeners();
+  }
+  
 }

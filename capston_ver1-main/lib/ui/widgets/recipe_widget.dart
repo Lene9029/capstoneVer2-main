@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
 import 'package:recipe_page_new/providers/recipe_provider.dart';
 import 'package:recipe_page_new/ui/screens/show_recipe_screen.dart';
-
 import '../../models/recipe_model.dart';
 
 class RecipeWidget extends StatelessWidget {
@@ -14,60 +12,71 @@ class RecipeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (() {
+      onTap: () {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: ((context) =>
-                    ShowRecipeScreen(recipeModel: recipeModel))));
-      }),
+          context,
+          MaterialPageRoute(
+            builder: (context) => ShowRecipeScreen(recipeModel: recipeModel),
+          ),
+        );
+      },
       child: Container(
         decoration: BoxDecoration(
-            color: !Provider.of<RecipeClass>(context).isDark
-                ? Colors.lightGreen
-                : null,
-            borderRadius: BorderRadius.circular(10)),
+          color: !Provider.of<RecipeClass>(context).isDark ? const Color.fromARGB(255, 173, 117, 97) : null,
+          borderRadius: BorderRadius.circular(10),
+        ),
         margin: const EdgeInsets.all(5),
         padding: const EdgeInsets.all(5),
-        child: ListTile(
-          tileColor: !Provider.of<RecipeClass>(context).isDark
-              ? Colors.blue[100]
-              : null,
-          leading: recipeModel.image == null
-              ? Container(
-                  decoration: BoxDecoration(
-                      color: !Provider.of<RecipeClass>(context).isDark
-                          ? Colors.blue
-                          : null,
-                      borderRadius: BorderRadius.circular(8)),
-                  height: double.infinity,
-                  width: 70,
-                  child: const Center(
-                      child: CircleAvatar(
-                    backgroundImage: AssetImage('images/food_logo.png'),
-                  )))
-              : Image.file(
-                  recipeModel.image!,
-                  width: 70,
-                  height: double.infinity,
-                ),
-          title: Text(recipeModel.name),
-          subtitle: Text('${recipeModel.preperationTime} mins'),
-          trailing: InkWell(
-            onTap: () {
-              Provider.of<RecipeClass>(context, listen: false)
-                  .updateIsFavorite(recipeModel);
-            },
-            child: recipeModel.isFavorite
-                ? const Icon(
-                    Icons.favorite,
-                    color: Colors.red,
-                  )
-                : const Icon(
-                    Icons.favorite_border,
-                    color: Colors.red,
-                  ),
-          ),
+        child: Column(
+          children: [
+            Expanded(
+              child: recipeModel.image == null
+                  ? Container(
+                      decoration: BoxDecoration(
+                        color: !Provider.of<RecipeClass>(context).isDark ? Colors.blue : null,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: const Center(
+                        child: CircleAvatar(
+                          backgroundImage: AssetImage('images/food_logo.png'),
+                          radius: 35, // Adjust the radius as needed
+                        ),
+                      ),
+                    )
+                  : ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.file(
+                        recipeModel.image!,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+            ),
+            const SizedBox(height: 8), // Spacing between image and text
+            Text(
+              recipeModel.name,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center, // Center align the title
+            ),
+            const SizedBox(height: 4), // Spacing between title and subtitle
+            Text(
+              '${recipeModel.preperationTime} mins',
+              style: const TextStyle(color: Colors.white),
+              textAlign: TextAlign.center, // Center align the subtitle
+            ),
+            const SizedBox(height: 4), // Spacing before the favorite icon
+            IconButton(
+              onPressed: () {
+                Provider.of<RecipeClass>(context, listen: false)
+                    .updateIsFavorite(recipeModel);
+              },
+              icon: recipeModel.isFavorite
+                  ? const Icon(Icons.favorite, color: Colors.red)
+                  : const Icon(Icons.favorite_border, color: Colors.white),
+            ),
+          ],
         ),
       ),
     );

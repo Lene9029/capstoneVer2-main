@@ -12,7 +12,7 @@ class SplashScreen extends StatelessWidget {
         radius: 70,
         backgroundColor: Colors.blue,
         child: CircleAvatar(
-          backgroundImage: AssetImage('images/logo.jpg'),
+          backgroundImage: AssetImage('images/logo.png'),
           radius: 40,
         ),
       ),

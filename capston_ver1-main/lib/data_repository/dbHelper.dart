@@ -19,15 +19,23 @@ class DbHelper {
 
   final String allergensName = 'allergenName';
   final String restrictions = 'restrictions';
+  final String allergenStatement = 'allergenStatement';
+  final String restrictionStatement = 'restrictionStatement';
 
   Future<void> initDatabase() async {
     database = await connectToDatabase();
     
   }
   
- 
- 
+    Future<void> addNewColumn(Database db) async {
+  
+      await db.execute('ALTER TABLE $tableName ADD COLUMN $allergenStatement TEXT');
+    
 
+    await db.execute('ALTER TABLE $tableName ADD COLUMN $restrictionStatement TEXT');
+  }
+ 
+  
     
       
   Future<Database> connectToDatabase() async {

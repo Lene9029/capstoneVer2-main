@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:recipe_page_new/models/recipe_model.dart';
-import 'package:recipe_page_new/providers/alleres_provider.dart';
 import 'package:recipe_page_new/ui/widgets/recipe_widget.dart';
 
 // ignore: must_be_immutable

@@ -12,6 +12,8 @@ class RecipeModel {
   
   late String allergensName;
   late String restrictions;
+  late String allergenStatement;
+  late String restrictionStatement;
 
   RecipeModel({
     this.id,
@@ -24,7 +26,10 @@ class RecipeModel {
 
     
    required this.allergensName,
-   required this.restrictions
+   required this.restrictions,
+   required this.allergenStatement,
+   required this.restrictionStatement
+   
   });
 
   Map<String, dynamic> toMap() {

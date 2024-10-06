@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -71,7 +69,7 @@ class _HomeScreenState extends State<detect_object_page> {
       message = false;
     });
 
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    final XFile? image = await _picker.pickImage(source: ImageSource.camera);
 
     try {
       objDetect = await _objectModel.getImagePrediction(
@@ -105,22 +103,6 @@ class _HomeScreenState extends State<detect_object_page> {
     final allergensProvider = Provider.of<AlleresProvider>(context);
 
     return Scaffold(
-          bottomNavigationBar: BottomAppBar(
-                color: Colors.lightGreen,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => detect_object_page()));
-                        },
-                        child: const Icon(Icons.camera)),
-                  ],
-                ),
-              ),
               body: Container(
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(

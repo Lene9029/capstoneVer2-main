@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:recipe_page_new/Detect_Object_Page.dart';
+import 'package:recipe_page_new/main_page.dart';
 import 'package:recipe_page_new/providers/alleres_provider.dart';
 import 'package:recipe_page_new/ui/screens/favorite_recipes_screen.dart';
-import 'package:recipe_page_new/ui/screens/main_recipe_screen.dart';
+import 'package:recipe_page_new/ui/screens/all_recipe_screen.dart';
 import 'package:recipe_page_new/ui/screens/new_recipe_screen.dart';
 import 'package:recipe_page_new/welcomepage/page_one_item.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -122,7 +123,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     alleresProvider.updateAllergens(allergens);
     alleresProvider.updateRestrictions(restrictions);
       
-      Navigator.push(context, MaterialPageRoute(builder: (context) => MainRecipeScreen(),));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage(),));
       
     }
   } 
@@ -155,7 +156,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             children: [
              TextButton(
                 onPressed: (){
-                 Navigator.push(context, MaterialPageRoute(builder: (context) => MainRecipeScreen()));
+                 Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage()));
                 },
                 child: Text("Skip"),
                 
