@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -6,7 +5,6 @@ import 'package:recipe_page_new/main_page.dart';
 import 'package:recipe_page_new/models/recipe_model.dart';
 import 'package:recipe_page_new/providers/recipe_provider.dart';
 import 'package:recipe_page_new/ui/widgets/recipe_widget.dart';
-import '../widgets/recipe_widget.dart';
 
 class MainRecipeScreen extends StatefulWidget {
   const MainRecipeScreen({super.key});

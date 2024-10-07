@@ -75,5 +75,15 @@ class RecipeClass extends ChangeNotifier {
     ).toList();
     notifyListeners();
   }
+
+  void filteredFavorites(String value) async {
+ allRecipes = await DbHelper.dbHelper.getAllRecipes();
+  favoriteRecipes = allRecipes.where((e) => e.isFavorite).toList();
+      favoriteRecipes = favoriteRecipes.where((recipe) =>
+      recipe.ingredients.toLowerCase().contains(value.toLowerCase())
+    ).toList();
+    notifyListeners();
+  }
+
   
 }

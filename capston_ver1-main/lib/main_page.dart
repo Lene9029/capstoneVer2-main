@@ -36,9 +36,9 @@ class NavigationController extends GetxController{
   final Rx<int> selectedIndex = 0.obs;
 
   final screens = [
-    MainRecipeScreen(),
-    detect_object_page(),
-    FavoriteRecipesScreen(),
+    const MainRecipeScreen(),
+    const detect_object_page(),
+    const FavoriteRecipesScreen(),
     ProfilePage()
   ];
 }

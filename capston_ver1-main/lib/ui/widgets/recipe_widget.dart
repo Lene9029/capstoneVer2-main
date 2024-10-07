@@ -30,7 +30,7 @@ class _NewRecipeWidgetState extends State<RecipeWidget> {
           )
         ],
         borderRadius: BorderRadius.circular(16),
-        color: Colors.black
+        color: Colors.transparent
       ),
       child: InkWell(
       onTap: () {
@@ -45,8 +45,9 @@ class _NewRecipeWidgetState extends State<RecipeWidget> {
       children: [
          widget.recipeModel.image == null
     ? Container(
+      height: 100,
         decoration: BoxDecoration(
-          color: !Provider.of<RecipeClass>(context).isDark ? Colors.blue : null,
+          color: !Provider.of<RecipeClass>(context).isDark ? Colors.white : null,
           borderRadius: BorderRadius.circular(16),
         ),
         child: const Center(
@@ -77,7 +78,7 @@ class _NewRecipeWidgetState extends State<RecipeWidget> {
                     ),
       ),
        Positioned(
-            bottom: 0,
+            bottom: 1,
             left: 0,
             right: 0,
             child: Container(
@@ -91,9 +92,20 @@ class _NewRecipeWidgetState extends State<RecipeWidget> {
                   children: [
                     BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
-                      child: Container(
+                      child:  Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.transparent, 
+                            Colors.black.withOpacity(1.0), 
+                          ],
+                        ),
                       ),
                     ),
+                    ),
+                   
                     Center(
                       child: Text(
                         widget.recipeModel.name,

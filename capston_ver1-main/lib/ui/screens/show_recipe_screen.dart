@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:recipe_page_new/models/recipe_model.dart';
 import 'package:recipe_page_new/providers/recipe_provider.dart';
@@ -13,189 +15,233 @@ class ShowRecipeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<RecipeClass>(
       builder: ((context, provider, child) => Scaffold(
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      provider.allergensNameController.text =
-                          recipeModel.allergensName;
-                          provider.restrictionsController.text =
-                          recipeModel.restrictions;
-                      provider.nameController.text = recipeModel.name;
-                      provider.preperationTimeController.text =
-                          recipeModel.preperationTime.toString();
-                      provider.ingredientsController.text =
-                          recipeModel.ingredients;
-                      provider.instructionsController.text =
-                          recipeModel.instructions;
-                      provider.image = recipeModel.image;
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: ((context) => EditRecipeScreen(
-                                  recipeModel: recipeModel)))); 
-                    },
-                    child: const Icon(Icons.edit)),
-                const SizedBox(
-                  width: 20,
-                ),
-                InkWell(
-                    onTap: () {
-                      provider.deleteRecipe(recipeModel);
-                      Navigator.pop(context);
-                    },
-                    child: const Icon(Icons.delete)),
-                  if (recipeModel.image != null)
-                    Container(
-                      height: 250,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.file(
-                          recipeModel.image!,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    )
-                  else
-                    const SizedBox(
-                      height: 10,
-                    ),
-                  
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Center(
-                    child: Text(
-                      recipeModel.name,
-                      style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        width: 200,
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            color: !Provider.of<RecipeClass>(context).isDark
-                                ? Colors.green.withOpacity(0.7)
-                                : null,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Text(
-                              'Allergens',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
-                            Text(
-                              recipeModel.allergensName,
-                              style: const TextStyle(
-                                  fontSize: 20, color: Colors.white),
-                            )
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          width: double.infinity,
-                        ),
-                      ),
-                      Container(
-                        width: 200,
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            color: !Provider.of<RecipeClass>(context).isDark
-                                ? Colors.green.withOpacity(0.7)
-                                : null,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Text(
-                              'Restrictions',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
-                            Text(
-                              recipeModel.restrictions,
-                              style: const TextStyle(
-                                  fontSize: 20, color: Colors.white),
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        color: !Provider.of<RecipeClass>(context).isDark
-                            ? Colors.green.withOpacity(0.7)
-                            : null,
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Row(
+            body: SafeArea(
+              child: Stack(
+                children: [ SingleChildScrollView(
+                  child: Positioned(
+                    left: 0,
+                    right: 0,
+                    top: MediaQuery.of(context).size.width,
+                    child: Column(
                       children: [
-                        const Text(
-                          'Preparation time:',
-                          style: TextStyle(
-                              fontSize: 16,
+                        if (recipeModel.image != null)
+                          ClipRRect(
+                            borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(16), bottomRight: Radius.circular(16)),
+                            child: Image.file(
+                              recipeModel.image!,
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        else
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Center(
+                          child: Text(
+                            recipeModel.name,
+                            style: const TextStyle(
+                              fontSize: 24,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white),
+                            ),
+                          ),
                         ),
                         const SizedBox(
-                          width: 10,
+                          height: 20,
                         ),
-                        Text(
-                          '${recipeModel.preperationTime} mins',
-                          style: const TextStyle(
-                              fontSize: 16, color: Colors.white),
-                        )
+                        Row(
+                          children: [
+                            Container(
+                              width: 200,
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  color: !Provider.of<RecipeClass>(context).isDark
+                                      ? Colors.green.withOpacity(0.7)
+                                      : null,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                    'Allergens',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  ),
+                                  Text(
+                                    recipeModel.allergensName,
+                                    style: const TextStyle(
+                                        fontSize: 20, color: Colors.white),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                width: double.infinity,
+                              ),
+                            ),
+                            Container(
+                              width: 200,
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  color: !Provider.of<RecipeClass>(context).isDark
+                                      ? Colors.green.withOpacity(0.7)
+                                      : null,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                    'Restrictions',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  ),
+                                  Text(
+                                    recipeModel.restrictions,
+                                    style: const TextStyle(
+                                        fontSize: 20, color: Colors.white),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              color: !Provider.of<RecipeClass>(context).isDark
+                                  ? Colors.white60
+                                  : null,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            children: [
+                              const Text(
+                                'Preparation time:',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                '${recipeModel.preperationTime} mins',
+                                style: const TextStyle(
+                                    fontSize: 16, color: Colors.black),
+                              )
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        _buildDetailsSection(
+                            'Ingredients', recipeModel.ingredients),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        _buildDetailsSection(
+                            'Instructions', recipeModel.instructions),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        _buildDetailsSection(
+                            'Allergen Statement', recipeModel.allergenStatement),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        _buildDetailsSection('Restriction Statement',
+                            recipeModel.restrictionStatement),
+                        const SizedBox(
+                          height: 10,
+                        ),
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
+                ),
+                Positioned(
+                  top: 5,
+                  right: 5,
+                  child: Row(
+                    children: [
+                      InkWell(
+                              onTap: () {
+                                provider.allergensNameController.text =
+                                    recipeModel.allergensName;
+                                    provider.restrictionsController.text =
+                                    recipeModel.restrictions;
+                                provider.nameController.text = recipeModel.name;
+                                provider.preperationTimeController.text =
+                                    recipeModel.preperationTime.toString();
+                                provider.ingredientsController.text =
+                                    recipeModel.ingredients;
+                                provider.instructionsController.text =
+                                    recipeModel.instructions;
+                                provider.image = recipeModel.image;
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: ((context) => EditRecipeScreen(
+                                            recipeModel: recipeModel)))); 
+                              },
+                              child: const Icon(Icons.edit, 
+                              color: Colors.black,)),
+                               const SizedBox(
+                        width: 20,
+                      ),
+                      InkWell(
+                          onTap: () {
+                            provider.deleteRecipe(recipeModel);
+                            Navigator.pop(context);
+                          },
+                          child: const Icon(Icons.delete)),
+                    ],
                   ),
-                  _buildDetailsSection(
-                      'Ingredients', recipeModel.ingredients),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  _buildDetailsSection(
-                      'Instructions', recipeModel.instructions),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  _buildDetailsSection(
-                      'Allergen Statement', recipeModel.allergenStatement),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  _buildDetailsSection('Restriction Statement',
-                      recipeModel.restrictionStatement),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                ],
+                ),
+                Positioned(
+                  top: 10,
+                  left: 15,
+                  child: Stack(
+                    children: [Opacity(
+                      opacity: 0.2,
+                      child: Container(  
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.black
+                        ),
+                        child: IconButton(onPressed: (){}, icon: const Icon(Icons.arrow_back_ios_new,
+                        color: Colors.white,)),                               
+                      ),
+                    ),
+                      IconButton(
+                        icon: const Icon(Icons.arrow_back_ios_new,
+                        color: Colors.white,),
+                        onPressed: () => Navigator.pop(context),
+                        ),
+                        //Positioned(
+                          //bottom: MediaQuery.of(context).size.height * 0.5,
+                          //child: ClipPath(
+                           // clipper: MyClipper(),
+                            //child: Container(
+                            //  width: double.infinity,
+                             // height: 300,
+                            //),
+                          //),
+                        //)
+                ]),
+                )                  
+                ]
               ),
             ),
           )),
@@ -215,17 +261,35 @@ class ShowRecipeScreen extends StatelessWidget {
           Text(
             title,
             style: const TextStyle(
-                fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
           ),
           const SizedBox(
             height: 20,
           ),
           Text(
             content,
-            style: const TextStyle(fontSize: 26, color: Colors.white),
+            style: const TextStyle(fontSize: 18, color: Colors.white),
           )
         ],
       ),
     );
   }
 }
+
+//class MyClipper extends CustomClipper<Path> {
+  //@override
+  //Path getClip(Size size) {
+   //var path = Path();
+    //path.lineTo(0, size.height);
+    //path.lineTo(size.width, size.height);
+    //path.quadraticBezierTo(0, size.height, 0, 0);
+    //return path;
+ // }
+
+ // @override
+  //bool shouldReclip(covariant CustomClipper<dynamic> oldClipper) {
+  //  return false;
+  //}
+
+  
+//}

@@ -41,4 +41,5 @@ class ItemClass extends ChangeNotifier {
     ItemDbHelper.dbHelper.deleteItems();
     getItems();
   }
+  
 }

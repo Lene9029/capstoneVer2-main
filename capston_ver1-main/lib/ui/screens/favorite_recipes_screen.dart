@@ -1,9 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:recipe_page_new/ui/screens/search_recipe_screen.dart';
-import 'package:recipe_page_new/ui/widgets/recipe_widget.dart';
+import 'package:recipe_page_new/ui/widgets/favorites_recipe_widget.dart';
 import '../../providers/recipe_provider.dart';
-import '../widgets/recipe_widget.dart';
 
 class FavoriteRecipesScreen extends StatelessWidget {
   const FavoriteRecipesScreen({super.key});
@@ -12,39 +11,71 @@ class FavoriteRecipesScreen extends StatelessWidget {
     return Consumer<RecipeClass>(
       builder: (BuildContext context, myProvider, Widget? child) {
         return Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.lightGreen,
-            title: const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          body: SafeArea(
+            child: Column(
               children: [
-                Text('Favorite Recipes'),
-                SizedBox(
-                  height: 4,
-                ),
-              ],
+                const Padding(
+            padding: EdgeInsets.symmetric(vertical: 16.0),
+            child: Text(
+              'Favorite Recipes',
+              textAlign: TextAlign.center,
+              style:TextStyle(
+                color: Colors.black,
+                fontSize: 24,
+                fontWeight: FontWeight.bold, 
+                shadows: [
+                  Shadow(
+                    blurRadius: 4.0,
+                    color: Colors.black26,
+                    offset: Offset(2.0, 2.0),
+                  ),
+                ],
+              ),
             ),
-            actions: [
-              InkWell(
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: ((context) => SearchRecipeScreen(
-                          recipes: myProvider.favoriteRecipes)))),
-                  child: const Icon(Icons.search)),
-            ],
           ),
-          body: GridView.builder(
+                //Padding(
+                  //padding: const EdgeInsets.all(8.0),
+                  //child: Container(
+                       //   margin: const EdgeInsets.only(top: 5, bottom: 20),
+                       //   width: MediaQuery.of(context).size.width,
+                       //   height: 50,
+                        //  alignment: Alignment.center,
+                        //  decoration: BoxDecoration(
+                       //     color: Colors.grey,
+                       //     borderRadius: BorderRadius.circular(10),
+                       //   ),
+                        //  child: TextFormField(
+                        //    decoration: InputDecoration(
+                           //   border: InputBorder.none,
+                          //    hintText: 'Search Recipes Here...',
+                          //    hintStyle: TextStyle(color: Colors.black.withOpacity(0.5)),
+                          //    prefixIcon: const Icon(
+                           //     Icons.search,
+                           //     size: 25,
+                           //   ),
+                         //   ),
+                          //  onChanged: (value) {
+                          //    myProvider.filteredFavorites(value);
+                          //  },
+                         // ),
+                       // ),
+              //  ),
+               Expanded(
+  child: ListView.builder(
     padding: const EdgeInsets.all(10),
-    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: 2, 
-      //childAspectRatio: 0.75, 
-      crossAxisSpacing: 10, 
-      mainAxisSpacing: 10,
-      mainAxisExtent: 185 
-    ),
-    itemCount: myProvider.favoriteRecipes.length, 
+    itemCount: myProvider.favoriteRecipes.length,
     itemBuilder: (context, index) {
-      return RecipeWidget(myProvider.favoriteRecipes[index]); 
+      return Container(
+        margin: const EdgeInsets.only(bottom: 5), 
+        child: FavoritesRecipe(myProvider.favoriteRecipes[index]), 
+      );
     },
   ),
+)
+
+              ],
+            ),
+          ),
           
         );
       },

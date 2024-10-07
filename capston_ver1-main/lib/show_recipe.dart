@@ -1,4 +1,7 @@
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:recipe_page_new/models/recipe_model.dart';
 import 'package:recipe_page_new/ui/widgets/recipe_widget.dart';
 
@@ -47,7 +50,7 @@ class _SearchRecipeScreenState extends State<ShowRecipeWithIngredients> {
         _filteredRecipes = widget.recipes.where((recipe) {
           return recipe.ingredients.toLowerCase().contains(ingredient);
         }).toList();
-        
+        print(widget.resultData);
         print(widget.allergens);
         print(widget.restrictions);
 
@@ -78,45 +81,83 @@ filteredR = filteredA.where((recipe) {
     print(widget.allergens);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: TextField(
-          onChanged: (value) {
-            filterRecipe(value);
-          },
-          decoration: const InputDecoration(
-            icon: Icon(
-              Icons.search,
-              color: Colors.white,
+ @override
+Widget build(BuildContext context) {
+  return Scaffold(
+    body: SafeArea(
+      child: Column(
+        children: [
+
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 16.0),
+            child: Text(
+              'Recommended Recipes',
+              textAlign: TextAlign.center,
+              style:TextStyle(
+                color: Colors.black,
+                fontSize: 24,
+                fontWeight: FontWeight.bold, 
+                shadows: [
+                  Shadow(
+                    blurRadius: 4.0,
+                    color: Colors.black26,
+                    offset: Offset(2.0, 2.0),
+                  ),
+                ],
+              ),
             ),
-            hintText: "Search Recipe",
-            hintStyle: TextStyle(color: Colors.white),
           ),
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.cancel),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          )
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              margin: const EdgeInsets.only(top: 5, bottom: 20),
+              width: MediaQuery.of(context).size.width,
+              height: 50,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: const Color(0xFFFAF3E0),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: 'Search Recipes Here...',
+                  hintStyle: TextStyle(color: Colors.black.withOpacity(0.5)),
+                  prefixIcon: const Icon(
+                    Icons.search,
+                    size: 25,
+                  ),
+                ),
+                onChanged: (value) {
+                  filterRecipe(value);
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              child: filteredFinal.isNotEmpty
+                  ? GridView.builder(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                        mainAxisExtent: 185,
+                      ),
+                      itemCount: filteredFinal.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return RecipeWidget(filteredFinal[index]);
+                      },
+                    )
+                  : const Center(
+                      child: Text('Recipe not found...'),
+                    ),
+            ),
+          ),
         ],
       ),
-      body: Container(
-        padding: const EdgeInsets.all(10),
-        child: filteredFinal.isNotEmpty
-            ? ListView.builder(
-                itemCount: filteredFinal.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return RecipeWidget(filteredFinal[index]);
-                },
-              )
-            : const Center(
-                child: Text('Recipe not found...'),
-              ),
-      ),
-    );
-  }
+    ),
+  );
+}
 }
