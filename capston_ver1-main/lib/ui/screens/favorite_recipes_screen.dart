@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:recipe_page_new/ui/screens/search_recipe_screen.dart';
+import 'package:recipe_page_new/ui/widgets/recipe_widget.dart';
 import '../../providers/recipe_provider.dart';
 import '../widgets/recipe_widget.dart';
 
@@ -31,16 +32,17 @@ class FavoriteRecipesScreen extends StatelessWidget {
             ],
           ),
           body: GridView.builder(
-    padding: const EdgeInsets.all(10), // Padding around the grid
+    padding: const EdgeInsets.all(10),
     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: 2, // Number of columns in the grid
-      childAspectRatio: 0.75, // Aspect ratio of each grid item
-      crossAxisSpacing: 10, // Horizontal spacing between grid items
-      mainAxisSpacing: 10, // Vertical spacing between grid items
+      crossAxisCount: 2, 
+      //childAspectRatio: 0.75, 
+      crossAxisSpacing: 10, 
+      mainAxisSpacing: 10,
+      mainAxisExtent: 185 
     ),
-    itemCount: myProvider.favoriteRecipes.length, // Total number of items
+    itemCount: myProvider.favoriteRecipes.length, 
     itemBuilder: (context, index) {
-      return RecipeWidget(myProvider.favoriteRecipes[index]); // Your RecipeWidget
+      return RecipeWidget(myProvider.favoriteRecipes[index]); 
     },
   ),
           
