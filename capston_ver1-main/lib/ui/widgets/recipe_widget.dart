@@ -17,22 +17,7 @@ class RecipeWidget extends StatefulWidget {
 class _NewRecipeWidgetState extends State<RecipeWidget> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 100,
-      padding: const EdgeInsets.all(1),
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.brown.withOpacity(0.1),
-            blurRadius: 50,
-            spreadRadius: 7,
-            offset: const Offset(0, 2)
-          )
-        ],
-        borderRadius: BorderRadius.circular(16),
-        color: Colors.transparent
-      ),
-      child: InkWell(
+    return InkWell(
       onTap: () {
         Navigator.push(
           context,
@@ -41,71 +26,65 @@ class _NewRecipeWidgetState extends State<RecipeWidget> {
           ),
         );
       },
-    child:  Stack(
-      children: [
-         widget.recipeModel.image == null
-    ? Container(
-      height: 100,
-        decoration: BoxDecoration(
-          color: !Provider.of<RecipeClass>(context).isDark ? Colors.white : null,
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: const Center(
-          child: CircleAvatar(
-            backgroundImage: AssetImage('images/food_logo.png'),
-            radius: 35, 
-          ),
-        ),
-      )
-    : ClipRRect(
-        borderRadius: BorderRadius.circular(16),
-        child: Image.file(
-          widget.recipeModel.image!,
-          fit: BoxFit.cover,
-        ),
-      ),
-      Positioned(
-        top: 0,
-        right: 0,
-        child: IconButton(
-                      onPressed: () {
-                        Provider.of<RecipeClass>(context, listen: false)
-                            .updateIsFavorite(widget.recipeModel);
-                      },
-                      icon: widget.recipeModel.isFavorite
-                          ? const Icon(Icons.favorite, color: Colors.red)
-                          : const Icon(Icons.favorite_border, color: Colors.white),
+      child: Card(
+        color: Colors.transparent,
+        elevation: 5,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        child: Stack(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: widget.recipeModel.image == null
+                  ? const Center(
+                      child: CircleAvatar(
+                        backgroundImage: AssetImage('images/Logo.png'),
+                      ),
+                    )
+                  : Image.file(
+                      widget.recipeModel.image!,
+                      fit: BoxFit.cover, 
+                      width: double.infinity, 
+                      height: double.infinity, 
                     ),
-      ),
-       Positioned(
-            bottom: 1,
-            left: 0,
-            right: 0,
-            child: Container(
-              height: 40, 
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
+            ),
+            Positioned(
+              top: 0,
+              right: 0,
+              child: IconButton(
+                onPressed: () {
+                  Provider.of<RecipeClass>(context, listen: false)
+                      .updateIsFavorite(widget.recipeModel);
+                },
+                icon: widget.recipeModel.isFavorite
+                    ? const Icon(Icons.favorite, color: Colors.red)
+                    : const Icon(Icons.favorite_border, color: Colors.white),
               ),
+            ),
+            Positioned(
+              bottom: 1,
+              left: 0,
+              right: 0,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16),
                 child: Stack(
                   children: [
                     BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
-                      child:  Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Colors.transparent, 
-                            Colors.black.withOpacity(1.0), 
-                          ],
+                      child: Container(
+                        height: 40,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.transparent,
+                              Colors.black.withOpacity(1.0),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                    ),
-                   
                     Center(
                       child: Text(
                         widget.recipeModel.name,
@@ -121,8 +100,9 @@ class _NewRecipeWidgetState extends State<RecipeWidget> {
                 ),
               ),
             ),
-          )]
-    ),)
+          ],
+        ),
+      ),
     );
   }
 }

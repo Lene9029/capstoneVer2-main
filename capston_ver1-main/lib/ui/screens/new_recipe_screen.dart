@@ -15,7 +15,6 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
   Future pickImage(BuildContext context, ImageSource source) async {
     final image = await ImagePicker().pickImage(source: source);
     if (image == null) return;
-    // ignore: use_build_context_synchronously
     Provider.of<RecipeClass>(context, listen: false).image = File(image.path);
     setState(() {});
   }

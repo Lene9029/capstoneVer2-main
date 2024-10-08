@@ -73,7 +73,7 @@ flutter:
     - images/profilebackground.jpg
     - images/food.jpg
     - images/logo.png
-    - images/searching.gif
+    - images/loading.gif
     - images/healthyimg.jpg
     - assets/models/ingredients.torchscript
     - assets/labels/labels.txt

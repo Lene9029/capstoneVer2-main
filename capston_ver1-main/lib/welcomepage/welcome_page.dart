@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:recipe_page_new/Detect_Object_Page.dart';
+
+
 import 'package:recipe_page_new/main_page.dart';
 import 'package:recipe_page_new/providers/alleres_provider.dart';
 import 'package:recipe_page_new/ui/screens/favorite_recipes_screen.dart';
 import 'package:recipe_page_new/ui/screens/all_recipe_screen.dart';
 import 'package:recipe_page_new/ui/screens/new_recipe_screen.dart';
-import 'package:recipe_page_new/welcomepage/page_one_item.dart';
+import 'package:recipe_page_new/WelcomePage/page_one_item.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 
-class welcomepage extends StatelessWidget {
+class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {       
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: OnboardingScreen(),
       routes: {
-        '/detect_screen':(context) => const detect_object_page(),
+        '/detect_screen':(context) => const DetectObjectPage(),
         '/favorite_recipes_screen': (context) => const FavoriteRecipesScreen(),
         '/new_recipe_screen': (context) => const NewRecipeScreen(),
         '/main_recipe_screen': (context) => const MainRecipeScreen(),
@@ -27,6 +28,10 @@ class welcomepage extends StatelessWidget {
       },
     );
   }
+}
+
+class detect_object_page {
+  const detect_object_page();
 }
 
 class OnboardingScreen extends StatefulWidget {
@@ -40,35 +45,62 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   int _currentPage = 0;
 
   final List<String> _allergenchoices = [
-    'Peanut',
-    'Cashew Nuts',
-    'Milk',
-    'Eggs',
-    'Wheat',
-    'Soy',
-    'Fish',
-    'Shellfish',
-    'Sesame Seeds',
-    'Mustard',
+    'Barley',
+    'Celeriac',
+    'Celery',
+    'Citrus fruit',
     'Corn',
-    'Meat',
-    'Fruits',
-    'Soy Sauce',
-    'Lemon',
-    'Garlic',
-    'Black Pepper',
-    'Onions',
-    'Chili Flakes',
-    'Mushrooms'
+    'Egg',
+    'Fish',
+    'Latex',
+    'Lupin',
+    'Milk',
+    'Mustard',
+    'Nickel allergy',
+    'Oats',
+    'Oral allergy syndrome',
+    'Peanut',
+    'Rice',
+    'Rye',
+    'Seeds',
+    'Sesame',
+    'Shellfish',
+    'Soy',
+    'Tree nut',
+    'Wheat'
   ];
 
   final List<String> restrictionsChoices = [
-    'Vegetarian',
+    'Alpha gal',
+    'Autoimmune protocol',
+    'Breastfeeding',
+    'Candida overgrowth',
+    'Citric acid intolerance',
+    'Dairy free',
+    'Egg free',
+    'Emulsifier free',
+    'Eosinophilic esophagitis',
+    'Fructose free',
+    'Gerd',
+    'Gluten free',
+    'Interstitial cystitis',
+    'Lactose free',
+    'Low fodmap',
+    'Low histamine',
+    'Low iodine',
+    'Low residue',
+    'Mediterranean diet',
+    'No beef',
+    'No pork',
+    'No poultry',
+    'Paleo',
+    'Pescatarian',
+    'Plantricious',
+    'Polycystic ovary syndrome',
+    'Pregnancy',
     'Vegan',
-    'Gluten-free',
-    'Lactose-free',
-    'Keto',
-    'Sugar-free'
+    'Vegetarian',
+    '30 paleo days'
   ];
 
   late List<bool> _selectedAllergenChoices;
@@ -132,99 +164,81 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     return
     Scaffold(
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: (int page) {
-          setState(() {
-            _currentPage = page;
-          });
-        },
-        children: <Widget>[
-          _buildPage1(),
-          _buildPage2(),
-          _buildPage3(),
-          _buildPage4(),
-        ],
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.lightGreen,
-        child: Container(
-          color: Colors.lightGreenAccent,
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-             TextButton(
-                onPressed: (){
-                 Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage()));
-                },
-                child: Text("Skip"),
-                
-              ),
-              SmoothPageIndicator(controller: _pageController, count: 4,
-              effect:  const WormEffect(
-                activeDotColor: Colors.green
-              ),),
-                
-               TextButton(
-                onPressed: _nextPage,
-                child: Text(_currentPage == 3 ? 'Finish' : 'Next'),    
-              ),
-            ],
-          ),
+      body: Stack(
+        children: [PageView(
+          controller: _pageController,
+          onPageChanged: (int page) {
+            setState(() {
+              _currentPage = page;
+            });
+          },
+          children: <Widget>[
+            _buildPage1(),
+            _buildPage2(),
+            _buildPage3(),
+            _buildPage4(),
+          ],
         ),
-      ),
+        Container(alignment: const Alignment(0, 0.85),
+          child: 
+          SmoothPageIndicator(controller: _pageController, count: 4,
+          effect:  const WormEffect(
+            activeDotColor: Colors.green
+          )),         
+        )
+      ])
     );
      
   }
-
+  
   Widget _buildPage1() {
-    return Scaffold(
-      backgroundColor: Colors.lightGreen,
-      body: Container(
-        child: Column(
-          children: [Image.asset(controller.items[0].image),
-          SizedBox(height: 15),
-          Text(controller.items[0].title, 
-          style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
-          SizedBox(height: 15,),
-          Text(controller.items[0].descriptions)
-          ],
-          
+    return 
+     Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(image: AssetImage(controller.items[0].image),
+          fit: BoxFit.cover)
         ),
-      ),
-    );
+        child: const Text('Nutritious Recipe App')
+      );
+    
   }
 
   Widget _buildPage2() {
     return Scaffold(
-      backgroundColor: Colors.lightGreen,
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'Select Your Allergens',
+              'What Are Your Allergens?',
               style: TextStyle(fontSize: 20),
             ),
             const SizedBox(height: 20),
-            Wrap(
-              spacing: 8.0,
-              children: List<Widget>.generate(
-                _allergenchoices.length,
-                (int index) {
-                  return ChoiceChip(
-                    label: Text(_allergenchoices[index]),
-                    selected: _selectedAllergenChoices[index],
-                    onSelected: (bool selected) {
-                      setState(() {
-                        _selectedAllergenChoices[index] = selected;
-                      });
-                    },
-                  );
-                },
-              ).toList(),
+            Card(
+              elevation: 5,             
+              child: Center(
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  child: Wrap(
+                    spacing: 8.0,
+                    children: List<Widget>.generate(
+                      _allergenchoices.length,
+                      (int index) {
+                        return ChoiceChip(
+                          label: Text(_allergenchoices[index]),
+                          selected: _selectedAllergenChoices[index],
+                          onSelected: (bool selected) {
+                            setState(() {
+                              _selectedAllergenChoices[index] = selected;
+                            });
+                          },
+                        );
+                      },
+                    ).toList(),
+                  ),
+                ),
+              ),
             ),
           ],
         ),
@@ -234,13 +248,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   Widget _buildPage3(){
     return Scaffold(
-      backgroundColor: Colors.lightGreen,
       body: Padding(padding: const EdgeInsets.all(15),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          const Text('Select Your Dietary Restrictions'),
-          SizedBox(height: 20,),
+          const Text('What Are Your Dietary Restrictions?',
+          style: TextStyle(fontSize: 20),),
+          const SizedBox(height: 20,),
           Wrap(
             spacing: 8.0,
             children: List<Widget>.generate(
@@ -262,13 +276,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       
     );
   }
-}
-
   Widget _buildPage4() {
-    return const Center(
-      child: Text(
-        'Lets Get Started',
+  return Center(
+    child: ElevatedButton(
+      onPressed: _nextPage, 
+      child: const Text(
+        'Let\'s Get Started',
         style: TextStyle(fontSize: 30),
       ),
-    );
-  }
+    ),
+  );
+}
+}
+
+  

@@ -60,7 +60,7 @@ class InitApp extends StatelessWidget {
         '/favorite_recipes_screen': (context) => const FavoriteRecipesScreen(),
         '/new_recipe_screen': (context) => const NewRecipeScreen(),
         '/main_recipe_screen': (context) => const MainRecipeScreen(),
-        '/welcome_page':(context) => welcomepage()       
+        '/welcome_page':(context) => WelcomePage()       
       },
     );
   }

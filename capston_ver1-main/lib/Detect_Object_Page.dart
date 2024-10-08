@@ -12,14 +12,14 @@ import 'package:recipe_page_new/providers/alleres_provider.dart';
 import 'package:recipe_page_new/providers/recipe_provider.dart';
 import 'package:recipe_page_new/show_recipe.dart';
 
-class detect_object_page extends StatefulWidget {
-  const detect_object_page({Key? key}) : super(key: key);
+class DetectObjectPage extends StatefulWidget {
+  const DetectObjectPage({Key? key}) : super(key: key);
 
   @override
-  State<detect_object_page> createState() => _HomeScreenState();
+  State<DetectObjectPage> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<detect_object_page> {
+class _HomeScreenState extends State<DetectObjectPage> {
   late ModelObjectDetection _objectModel;
   List<ResultObjectDetection?> objDetect = [];
   File? _image;
@@ -93,10 +93,6 @@ class _HomeScreenState extends State<detect_object_page> {
     }
   }
 
-  resultData() {
-    var result = classNames;
-  }
-
   @override
   Widget build(BuildContext context) {
     final myProvider = Provider.of<RecipeClass>(context);
@@ -109,8 +105,8 @@ class _HomeScreenState extends State<detect_object_page> {
                   children: [
                     !firststate
                         ? !message
-                            ? LoaderState()
-                            : Text("Select the Camera to Begin Detections")
+                            ? const LoaderState()
+                            : const Text("")
                         : Expanded(
                             child: Container(
                               child: _objectModel.renderBoxesOnImage(
@@ -120,27 +116,26 @@ class _HomeScreenState extends State<detect_object_page> {
                     const SizedBox(
                       height: 100,
                     ),
+                     
                     ElevatedButton(
-                      onPressed: () {
-                        
+                      onPressed: () { 
                         Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => MultiProvider(
                     providers: [
-                      Provider.value(value: myProvider.allRecipes),  // Passing RecipeClass
+                      Provider.value(value: myProvider.allRecipes),  
                       Provider.value(value: allergensProvider.allergens),
-                      Provider.value(value: allergensProvider.restrictions)  // Passing AlleresProvider
+                      Provider.value(value: allergensProvider.restrictions)  
                     ],
                     child: ShowRecipeWithIngredients(
                       resultData: classNames,
-                      recipes: myProvider.allRecipes, // Accessing RecipeClass data
-                      allergens: allergensProvider.allergens, // Accessing AlleresProvider data
-                      restrictions: allergensProvider.restrictions, // Accessing AlleresProvider data
+                      recipes: myProvider.allRecipes, 
+                      allergens: allergensProvider.allergens,
+                      restrictions: allergensProvider.restrictions, 
                     ),
                   ),
                 ),
               );
-              
                       },
                       child: const Text('View Recipe'),
                     ),

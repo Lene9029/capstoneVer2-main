@@ -44,7 +44,7 @@ class ProfilePage extends StatelessWidget {
                       color: Colors.black,
                     ),
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => welcomepage()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => WelcomePage()));
                     },
                   ),
                   myProvider.isDark

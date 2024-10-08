@@ -16,7 +16,7 @@ class SplashScreen extends StatelessWidget {
           radius: 40,
         ),
       ),
-      nextScreen: welcomepage(),
+      nextScreen: WelcomePage(),
       splashTransition: SplashTransition.rotationTransition,
       backgroundColor: Colors.black,
     );

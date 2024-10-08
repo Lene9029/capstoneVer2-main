@@ -17,7 +17,7 @@ class MainPage extends StatelessWidget {
       bottomNavigationBar: Obx(
         () =>  NavigationBar(
           height: 60,
-          elevation: 1,
+          elevation: 5,
           selectedIndex: controller.selectedIndex.value,
           onDestinationSelected: (index) => controller.selectedIndex.value = index,
           destinations: const [ 
@@ -37,7 +37,7 @@ class NavigationController extends GetxController{
 
   final screens = [
     const MainRecipeScreen(),
-    const detect_object_page(),
+    const DetectObjectPage(),
     const FavoriteRecipesScreen(),
     ProfilePage()
   ];
