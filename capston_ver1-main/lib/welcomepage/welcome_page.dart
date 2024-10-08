@@ -91,7 +91,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     }
   }
 
-  return selectedAllergenChoices;  // Return the list instead of joining it
+  return selectedAllergenChoices;  
 }
 
 

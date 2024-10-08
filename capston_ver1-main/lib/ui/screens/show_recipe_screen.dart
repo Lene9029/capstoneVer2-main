@@ -116,31 +116,34 @@ class ShowRecipeScreen extends StatelessWidget {
                         const SizedBox(
                           height: 10,
                         ),
-                        Container(
+                        Padding(
                           padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              color: !Provider.of<RecipeClass>(context).isDark
-                                  ? Colors.white60
-                                  : null,
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Row(
-                            children: [
-                              const Text(
-                                'Preparation time:',
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                '${recipeModel.preperationTime} mins',
-                                style: const TextStyle(
-                                    fontSize: 16, color: Colors.black),
-                              )
-                            ],
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                color: !Provider.of<RecipeClass>(context).isDark
+                                    ? Colors.white60
+                                    : null,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Row(
+                              children: [
+                                const Text(
+                                  'Preparation time:',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  '${recipeModel.preperationTime} mins',
+                                  style: const TextStyle(
+                                      fontSize: 16, color: Colors.black),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                         const SizedBox(
@@ -249,28 +252,34 @@ class ShowRecipeScreen extends StatelessWidget {
   }
 
   Widget _buildDetailsSection(String title, String content) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-          color: Colors.green.withOpacity(0.7),
-          borderRadius: BorderRadius.circular(10)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-                fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+    return Padding(
+      padding: const EdgeInsets.only(right: 10, left: 10),
+      child: Card(
+        elevation: 10,
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.7),
+              borderRadius: BorderRadius.circular(10)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                    fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                content,
+                style: const TextStyle(fontSize: 12, color: Colors.black),
+              )
+            ],
           ),
-          const SizedBox(
-            height: 20,
-          ),
-          Text(
-            content,
-            style: const TextStyle(fontSize: 18, color: Colors.white),
-          )
-        ],
+        ),
       ),
     );
   }

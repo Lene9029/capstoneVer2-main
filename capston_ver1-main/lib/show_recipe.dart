@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'package:recipe_page_new/models/recipe_model.dart';
 import 'package:recipe_page_new/ui/widgets/recipe_widget.dart';
@@ -78,84 +79,90 @@ filteredR = filteredA.where((recipe) {
   void initState() {
     _filterRecipes(widget.resultData);
     super.initState();
-    print(widget.allergens);
   }
 
  @override
 Widget build(BuildContext context) {
   return Scaffold(
     body: SafeArea(
-      child: Column(
-        children: [
-
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 16.0),
-            child: Text(
-              'Recommended Recipes',
-              textAlign: TextAlign.center,
-              style:TextStyle(
-                color: Colors.black,
-                fontSize: 24,
-                fontWeight: FontWeight.bold, 
-                shadows: [
-                  Shadow(
-                    blurRadius: 4.0,
-                    color: Colors.black26,
-                    offset: Offset(2.0, 2.0),
-                  ),
-                ],
+      child: Stack(
+        children: [Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(top: 15),
+              child: Text(
+                'Recommended Recipes',
+                textAlign: TextAlign.center,
+                style:TextStyle(
+                  color: Colors.black,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold, 
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              margin: const EdgeInsets.only(top: 5, bottom: 20),
-              width: MediaQuery.of(context).size.width,
-              height: 50,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: const Color(0xFFFAF3E0),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: 'Search Recipes Here...',
-                  hintStyle: TextStyle(color: Colors.black.withOpacity(0.5)),
-                  prefixIcon: const Icon(
-                    Icons.search,
-                    size: 25,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                margin: const EdgeInsets.only(top: 5, bottom: 20),
+                width: MediaQuery.of(context).size.width,
+                height: 50,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Card(
+                  elevation: 5,
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Search Recipes Here...',
+                      hintStyle: TextStyle(color: Colors.black.withOpacity(0.5)),
+                      prefixIcon: const Icon(
+                        Icons.search,
+                        size: 25,
+                      ),
+                    ),
+                    onChanged: (value) {
+                      filterRecipe(value);
+                    },
                   ),
                 ),
-                onChanged: (value) {
-                  filterRecipe(value);
-                },
               ),
             ),
-          ),
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              child: filteredFinal.isNotEmpty
-                  ? GridView.builder(
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                        mainAxisExtent: 185,
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                child: filteredFinal.isNotEmpty
+                    ? GridView.builder(
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                          mainAxisExtent: 185,
+                        ),
+                        itemCount: filteredFinal.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return RecipeWidget(filteredFinal[index]);
+                        },
+                      )
+                    : const Center(
+                        child: Text('Recipe not found...'),
                       ),
-                      itemCount: filteredFinal.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return RecipeWidget(filteredFinal[index]);
-                      },
-                    )
-                  : const Center(
-                      child: Text('Recipe not found...'),
-                    ),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
+              Positioned(
+                top: 8,
+                left: 10,
+                child: IconButton(
+                          icon: const Icon(Icons.arrow_back_ios_new,
+                          color: Colors.black,),
+                          onPressed: () => Navigator.pop(context),
+                          ),
+              ),
+        ]
       ),
     ),
   );

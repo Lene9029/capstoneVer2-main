@@ -24,11 +24,6 @@ class FavoriteRecipesScreen extends StatelessWidget {
                 fontSize: 24,
                 fontWeight: FontWeight.bold, 
                 shadows: [
-                  Shadow(
-                    blurRadius: 4.0,
-                    color: Colors.black26,
-                    offset: Offset(2.0, 2.0),
-                  ),
                 ],
               ),
             ),

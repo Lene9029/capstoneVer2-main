@@ -37,7 +37,7 @@ class FavoritesRecipe extends StatelessWidget {
               ? Container(
                   decoration: BoxDecoration(
                       color: !Provider.of<RecipeClass>(context).isDark
-                          ? Colors.blue
+                          ? const Color.fromARGB(255, 167, 90, 62)
                           : null,
                       borderRadius: BorderRadius.circular(8)),
                   height: double.infinity,
