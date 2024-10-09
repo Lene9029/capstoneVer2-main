@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-
 import 'package:flutter/services.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -23,16 +22,14 @@ class _HomeScreenState extends State<DetectObjectPage> {
   late ModelObjectDetection _objectModel;
   List<ResultObjectDetection?> objDetect = [];
   File? _image;
-  ImagePicker _picker = ImagePicker();
-  bool firststate = false;
-  bool message = true;
+  final ImagePicker _picker = ImagePicker();
+  bool isLoading = false;
   List<String> classNames = [];
 
   @override
   void initState() {
     super.initState();
     loadModel();
-    runObjectDetection();
   }
 
   Future<void> loadModel() async {
@@ -54,42 +51,38 @@ class _HomeScreenState extends State<DetectObjectPage> {
     }
   }
 
-  void handleTimeout() {
-    setState(() {
-      firststate = true;
-    });
-  }
-
-  Timer scheduleTimeout([int milliseconds = 10000]) =>
-      Timer(Duration(milliseconds: milliseconds), handleTimeout);
-
   Future<void> runObjectDetection() async {
-    setState(() {
-      firststate = false;
-      message = false;
-    });
-
     final XFile? image = await _picker.pickImage(source: ImageSource.camera);
 
-    try {
-      objDetect = await _objectModel.getImagePrediction(
-        await File(image!.path).readAsBytes(),
-        minimumScore: 0.1,
-        IOUThershold: 0.3,
-      );
-
-      classNames = [];
-      for (var detection in objDetect) {
-        classNames.add(detection?.className ?? '');
-      }
-
-      scheduleTimeout(5 * 1000);
+    if (image != null) {
       setState(() {
+        isLoading = true; // Start the loader when image is picked
         _image = File(image.path);
       });
-    } catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('No Image Detected')));
+
+      try {
+        objDetect = await _objectModel.getImagePrediction(
+          await File(image.path).readAsBytes(),
+          minimumScore: 0.1,
+          IOUThershold: 0.3,
+        );
+
+        classNames = objDetect
+            .map((detection) => detection?.className ?? '')
+            .where((name) => name.isNotEmpty)
+            .toList();
+
+        setState(() {
+          isLoading = false; // Stop loader after object detection is done
+        });
+      } catch (e) {
+        setState(() {
+          isLoading = false; // Ensure loader stops even on error
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('No Image Detected')),
+        );
+      }
     }
   }
 
@@ -99,49 +92,56 @@ class _HomeScreenState extends State<DetectObjectPage> {
     final allergensProvider = Provider.of<AlleresProvider>(context);
 
     return Scaffold(
-              body: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    !firststate
-                        ? !message
-                            ? const LoaderState()
-                            : const Text("")
-                        : Expanded(
-                            child: Container(
-                              child: _objectModel.renderBoxesOnImage(
-                                  _image!, objDetect),
-                            ),
-                          ),
-                    const SizedBox(
-                      height: 100,
-                    ),
-                     
-                    ElevatedButton(
-                      onPressed: () { 
-                        Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => MultiProvider(
-                    providers: [
-                      Provider.value(value: myProvider.allRecipes),  
-                      Provider.value(value: allergensProvider.allergens),
-                      Provider.value(value: allergensProvider.restrictions)  
-                    ],
-                    child: ShowRecipeWithIngredients(
-                      resultData: classNames,
-                      recipes: myProvider.allRecipes, 
-                      allergens: allergensProvider.allergens,
-                      restrictions: allergensProvider.restrictions, 
-                    ),
-                  ),
-                ),
-              );
-                      },
-                      child: const Text('View Recipe'),
-                    ),
-                  ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (_image == null)
+              const Text("Please Take a Picture")
+            else if (isLoading)
+              const LoaderState() // Show the loader when processing the image
+            else
+              Expanded(
+                child: Container(
+                  child: _objectModel.renderBoxesOnImage(_image!, objDetect),
                 ),
               ),
-            );
+            const SizedBox(height: 100),
+            ElevatedButton(
+              onPressed: runObjectDetection,
+              child: const Text('Take a photo'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (classNames.isNotEmpty) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => MultiProvider(
+                        providers: [
+                          Provider.value(value: myProvider.allRecipes),
+                          Provider.value(value: allergensProvider.allergens),
+                          Provider.value(value: allergensProvider.restrictions),
+                        ],
+                        child: ShowRecipeWithIngredients(
+                          resultData: classNames,
+                          recipes: myProvider.allRecipes,
+                          allergens: allergensProvider.allergens,
+                          restrictions: allergensProvider.restrictions,
+                        ),
+                      ),
+                    ),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('No Ingredients detected!')),
+                  );
+                }
+              },
+              child: const Text('View Recommendations'),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

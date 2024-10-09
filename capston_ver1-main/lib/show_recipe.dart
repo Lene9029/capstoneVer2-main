@@ -53,19 +53,24 @@ class _SearchRecipeScreenState extends State<ShowRecipeWithIngredients> {
 
         _filteredRecipe.addAll(_filteredRecipes);
 
-        for (var restriction in widget.restrictions) {
-        filteredR = _filteredRecipe.where((recipe) {
-          return recipe.restrictions.toLowerCase().contains(restriction.toLowerCase());
-        }).toList();
+       if (widget.restrictions.isNotEmpty) {
+  for (var restriction in widget.restrictions) {
+    _filteredRecipe = _filteredRecipe.where((recipe) {
+      return recipe.restrictions.toLowerCase().contains(restriction.toLowerCase());
+    }).toList();
+  }
 }
-
-        filteredA = filteredR.where((recipe) {
+        if (widget.allergens.isNotEmpty) {
+          _filteredRecipe = _filteredRecipe .where((recipe) {
   return !widget.allergens.any((allergen) =>
       recipe.allergensName.toLowerCase().contains(allergen.toLowerCase()));
 }).toList();
+        }
+        
+        
 
       }
-      filteredFinal = filteredA.toSet().toList();
+      filteredFinal = _filteredRecipe.toSet().toList();
     });
   }
 

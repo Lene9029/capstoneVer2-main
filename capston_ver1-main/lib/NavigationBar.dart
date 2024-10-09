@@ -33,7 +33,7 @@ class MainPage extends StatelessWidget {
 }
 
 class NavigationController extends GetxController{
-  final Rx<int> selectedIndex = 0.obs;
+  final Rx<int> selectedIndex = 1.obs;
 
   final screens = [
     const MainRecipeScreen(),

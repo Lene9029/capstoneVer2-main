@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:recipe_page_new/Detect_Object_Page.dart';
 
 
-import 'package:recipe_page_new/main_page.dart';
+import 'package:recipe_page_new/NavigationBar.dart';
 import 'package:recipe_page_new/providers/alleres_provider.dart';
 import 'package:recipe_page_new/ui/screens/favorite_recipes_screen.dart';
 import 'package:recipe_page_new/ui/screens/all_recipe_screen.dart';
