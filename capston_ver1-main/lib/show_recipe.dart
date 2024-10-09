@@ -1,12 +1,8 @@
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-
 import 'package:recipe_page_new/models/recipe_model.dart';
 import 'package:recipe_page_new/ui/widgets/recipe_widget.dart';
 
-// ignore: must_be_immutable
+
 class ShowRecipeWithIngredients extends StatefulWidget {
   ShowRecipeWithIngredients({
     super.key,

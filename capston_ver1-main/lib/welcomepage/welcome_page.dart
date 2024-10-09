@@ -1,4 +1,8 @@
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:recipe_page_new/Detect_Object_Page.dart';
 
@@ -149,7 +153,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       List<String> allergens = getSelectedAllergens();
       List<String> restrictions = getSelectedRestrictions();
       
-      
+      print(restrictions);
+      print(allergens);
       
      final alleresProvider = Provider.of<AlleresProvider>(context, listen: false);
     alleresProvider.updateAllergens(allergens);
@@ -205,37 +210,55 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   Widget _buildPage2() {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(15.0),
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        decoration: const BoxDecoration(
+           image: DecorationImage(image: AssetImage('images/allergy.jpg'),
+           fit: BoxFit.cover),           
+        ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'What Are Your Allergens?',
-              style: TextStyle(fontSize: 20),
-            ),
-            const SizedBox(height: 20),
-            Card(
-              elevation: 5,             
-              child: Center(
-                child: Container(
-                  padding: const EdgeInsets.all(10),
-                  child: Wrap(
-                    spacing: 8.0,
-                    children: List<Widget>.generate(
-                      _allergenchoices.length,
-                      (int index) {
-                        return ChoiceChip(
-                          label: Text(_allergenchoices[index]),
-                          selected: _selectedAllergenChoices[index],
-                          onSelected: (bool selected) {
-                            setState(() {
-                              _selectedAllergenChoices[index] = selected;
-                            });
-                          },
-                        );
-                      },
-                    ).toList(),
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Text(
+                            'What Are Your Allergens?',
+                            style: TextStyle(fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                          ),
+                          const SizedBox(height: 20),
+                          Wrap(
+                            spacing: 8.0,
+                            children: List<Widget>.generate(
+                              _allergenchoices.length,
+                              (int index) {
+                                return ChoiceChip(
+                                  label: Text(_allergenchoices[index]),
+                                  selected: _selectedAllergenChoices[index],
+                                  onSelected: (bool selected) {
+                                    setState(() {
+                                      _selectedAllergenChoices[index] = selected;
+                                    });
+                                  },
+                                );
+                              },
+                            ).toList(),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -248,32 +271,63 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   Widget _buildPage3(){
     return Scaffold(
-      body: Padding(padding: const EdgeInsets.all(15),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          const Text('What Are Your Dietary Restrictions?',
-          style: TextStyle(fontSize: 20),),
-          const SizedBox(height: 20,),
-          Wrap(
-            spacing: 8.0,
-            children: List<Widget>.generate(
-              restrictionsChoices.length, 
-              (int index) {
-                return ChoiceChip(label: Text(restrictionsChoices[index]),
-                 selected: _selectedRestrictionsChoices[index],
-                 onSelected: (bool selected){
-                  setState(() {
-                    _selectedRestrictionsChoices[index] = selected;
-                  });
-                 },
-                );
-              }),
-          )
-        ]
-        
-      ),),
-      
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        decoration: const BoxDecoration(
+          image: DecorationImage(image: AssetImage('images/diet.jpg'),
+          fit: BoxFit.cover)
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: Center(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(                      
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            const Text('What Are Your Diets?',
+                            style: TextStyle(fontSize: 30,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 20,),
+                            Wrap(
+                              spacing: 8.0,
+                              children: List<Widget>.generate(
+                                restrictionsChoices.length, 
+                                (int index) {
+                                  return ChoiceChip(label: Text(restrictionsChoices[index]),
+                                   selected: _selectedRestrictionsChoices[index],
+                                   onSelected: (bool selected){
+                                    setState(() {
+                                      _selectedRestrictionsChoices[index] = selected;
+                                    });
+                                   },
+                                  );
+                                }),
+                            )
+                          ]
+                          
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),     
     );
   }
   Widget _buildPage4() {
