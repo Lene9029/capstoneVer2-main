@@ -92,54 +92,88 @@ class _HomeScreenState extends State<DetectObjectPage> {
     final allergensProvider = Provider.of<AlleresProvider>(context);
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Ingredient Detection'),
+        centerTitle: true,
+        backgroundColor: Colors.teal,
+      ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (_image == null)
-              const Text("Please Take a Picture")
-            else if (isLoading)
-              const LoaderState() // Show the loader when processing the image
-            else
-              Expanded(
-                child: Container(
-                  child: _objectModel.renderBoxesOnImage(_image!, objDetect),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              
+              if (_image == null)
+                const Text(
+                  "Please Take a Picture",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                )
+              else if (isLoading)
+                const LoaderState() 
+              else
+                Expanded(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15), 
+                    child: _objectModel.renderBoxesOnImage(_image!, objDetect),
+                  ),
+                ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: runObjectDetection,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.teal, 
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30), 
+                  ),
+                ),
+                child: const Text(
+                  'Take a Photo',
+                  style: TextStyle(fontSize: 18),
                 ),
               ),
-            const SizedBox(height: 100),
-            ElevatedButton(
-              onPressed: runObjectDetection,
-              child: const Text('Take a photo'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                if (classNames.isNotEmpty) {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => MultiProvider(
-                        providers: [
-                          Provider.value(value: myProvider.allRecipes),
-                          Provider.value(value: allergensProvider.allergens),
-                          Provider.value(value: allergensProvider.restrictions),
-                        ],
-                        child: ShowRecipeWithIngredients(
-                          resultData: classNames,
-                          recipes: myProvider.allRecipes,
-                          allergens: allergensProvider.allergens,
-                          restrictions: allergensProvider.restrictions,
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  if (classNames.isNotEmpty) {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => MultiProvider(
+                          providers: [
+                            Provider.value(value: myProvider.allRecipes),
+                            Provider.value(value: allergensProvider.allergens),
+                            Provider.value(value: allergensProvider.restrictions),
+                          ],
+                          child: ShowRecipeWithIngredients(
+                            resultData: classNames,
+                            recipes: myProvider.allRecipes,
+                            allergens: allergensProvider.allergens,
+                            restrictions: allergensProvider.restrictions,
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('No Ingredients detected!')),
-                  );
-                }
-              },
-              child: const Text('View Recommendations'),
-            ),
-          ],
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('No Ingredients detected!')),
+                    );
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.teal, 
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30), 
+                  ),
+                ),
+                child: const Text(
+                  'View Recommendations',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

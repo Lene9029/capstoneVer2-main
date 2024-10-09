@@ -61,14 +61,11 @@ class _SearchRecipeScreenState extends State<ShowRecipeWithIngredients> {
   }
 }
         if (widget.allergens.isNotEmpty) {
-          _filteredRecipe = _filteredRecipe .where((recipe) {
+          _filteredRecipe = _filteredRecipe.where((recipe) {
   return !widget.allergens.any((allergen) =>
       recipe.allergensName.toLowerCase().contains(allergen.toLowerCase()));
 }).toList();
         }
-        
-        
-
       }
       filteredFinal = _filteredRecipe.toSet().toList();
     });
