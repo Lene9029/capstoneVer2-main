@@ -80,7 +80,7 @@ class RecipeClass extends ChangeNotifier {
  allRecipes = await DbHelper.dbHelper.getAllRecipes();
   favoriteRecipes = allRecipes.where((e) => e.isFavorite).toList();
       favoriteRecipes = favoriteRecipes.where((recipe) =>
-      recipe.ingredients.toLowerCase().contains(value.toLowerCase())
+      recipe.name.toLowerCase().contains(value.toLowerCase())
     ).toList();
     notifyListeners();
   }

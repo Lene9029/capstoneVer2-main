@@ -94,6 +94,7 @@ class _HomeScreenState extends State<DetectObjectPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Ingredient Detection'),
+        automaticallyImplyLeading: false,
         centerTitle: true,
         backgroundColor: Colors.teal,
       ),
