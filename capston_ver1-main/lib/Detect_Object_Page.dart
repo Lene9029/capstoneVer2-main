@@ -37,7 +37,7 @@ class _HomeScreenState extends State<DetectObjectPage> {
     try {
       _objectModel = await FlutterPytorch.loadObjectDetectionModel(
         pathObjectDetectionModel,
-        4,
+        70,
         640,
         640,
         labelPath: "assets/labels/labels.txt",
@@ -56,7 +56,7 @@ class _HomeScreenState extends State<DetectObjectPage> {
 
     if (image != null) {
       setState(() {
-        isLoading = true; // Start the loader when image is picked
+        isLoading = true; 
         _image = File(image.path);
       });
 
@@ -73,11 +73,11 @@ class _HomeScreenState extends State<DetectObjectPage> {
             .toList();
 
         setState(() {
-          isLoading = false; // Stop loader after object detection is done
+          isLoading = false; 
         });
       } catch (e) {
         setState(() {
-          isLoading = false; // Ensure loader stops even on error
+          isLoading = false;
         });
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('No Image Detected')),
