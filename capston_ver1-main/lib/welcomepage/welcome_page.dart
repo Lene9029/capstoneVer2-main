@@ -26,9 +26,7 @@ class WelcomePage extends StatelessWidget {
         '/detect_screen':(context) => const DetectObjectPage(),
         '/favorite_recipes_screen': (context) => const FavoriteRecipesScreen(),
         '/new_recipe_screen': (context) => const NewRecipeScreen(),
-        '/main_recipe_screen': (context) => const MainRecipeScreen(),
-        
-        
+        '/main_recipe_screen': (context) => const MainRecipeScreen(),   
       },
     );
   }
