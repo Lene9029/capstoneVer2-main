@@ -16,7 +16,7 @@ class SelectedIngredientsResult extends StatefulWidget {
 
   final List<RecipeModel> recipes;
   List<RecipeModel> filteredRecipes = [];
-  final List<String> resultData;
+  late List<String> resultData;
   List<RecipeModel> filteredRecipe = [];
   final  List<String> allergens;
   final List<String> restrictions;

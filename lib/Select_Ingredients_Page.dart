@@ -1,16 +1,19 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:recipe_page_new/Selected_Ingredients_Result.dart';
+import 'package:recipe_page_new/providers/alleres_provider.dart';
+import 'package:recipe_page_new/providers/recipe_provider.dart';
 
-class SeelecIgredientsPage extends StatefulWidget {
-  const SeelecIgredientsPage({super.key});
+class SelecIgredientsPage extends StatefulWidget {
+  const SelecIgredientsPage({super.key});
 
   @override
-  State<SeelecIgredientsPage> createState() => _SeelecIgredientsPageState();
+  State<SelecIgredientsPage> createState() => _SeelecIgredientsPageState();
 }
 
-class _SeelecIgredientsPageState extends State<SeelecIgredientsPage> {
-
+class _SeelecIgredientsPageState extends State<SelecIgredientsPage> {
   final List<String> _ingredientchoices = [
     'ampalaya',
     'bangus',
@@ -83,87 +86,119 @@ class _SeelecIgredientsPageState extends State<SeelecIgredientsPage> {
     'spring-onions',
     'tomato'
   ];
-  
+
   late List<bool> _selectedIngredientChoices = [];
 
   @override
   void initState() {
     super.initState();
-    _selectedIngredientChoices = List<bool>.filled(_ingredientchoices.length, false); 
+    _selectedIngredientChoices =
+        List<bool>.filled(_ingredientchoices.length, false);
   }
 
   List<String> getSelectedIngredients() {
-  List<String> selectedIngredientChoices = [];
+    List<String> selectedIngredientChoices = [];
 
-  for (int i = 0; i < _ingredientchoices.length; i++) {
-    if (_selectedIngredientChoices[i]) {
-      selectedIngredientChoices.add(_ingredientchoices[i]);
+    for (int i = 0; i < _ingredientchoices.length; i++) {
+      if (_selectedIngredientChoices[i]) {
+        selectedIngredientChoices.add(_ingredientchoices[i]);
+      }
     }
-  }
 
-  return selectedIngredientChoices;  
-}
+    return selectedIngredientChoices;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final myProvider = Provider.of<RecipeClass>(context);
+    final allergensProvider = Provider.of<AlleresProvider>(context);
+
     return Scaffold(
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        //decoration: const BoxDecoration(
-         // image: DecorationImage(image: AssetImage('images/diet.jpg'),
-         // fit: BoxFit.cover)
-       // ),
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Expanded(
-                child: Center(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(                      
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            const Text('Choose Your Ingredients',
-                            style: TextStyle(fontSize: 30,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(height: 20,),
-                            Wrap(
-                              spacing: 8.0,
-                              children: List<Widget>.generate(
-                                _ingredientchoices.length, 
-                                (int index) {
-                                  return ChoiceChip(label: Text(_ingredientchoices[index]),
-                                   selected: _selectedIngredientChoices[index],
-                                   onSelected: (bool selected){
-                                    setState(() {
-                                      _selectedIngredientChoices[index] = selected;
-                                    });
-                                   },
+      body: SafeArea(
+        child: SizedBox(
+          height: double.infinity,
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: SingleChildScrollView( // Add SingleChildScrollView here
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Center(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              const Text(
+                                'Choose Your Ingredients',
+                                style: TextStyle(
+                                    fontSize: 30,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(height: 20),
+                              Wrap(
+                                spacing: 8.0,
+                                children: List<Widget>.generate(
+                                    _ingredientchoices.length, (int index) {
+                                  return ChoiceChip(
+                                    label: Text(_ingredientchoices[index]),
+                                    selected: _selectedIngredientChoices[index],
+                                    onSelected: (bool selected) {
+                                      setState(() {
+                                        _selectedIngredientChoices[index] =
+                                            selected;
+                                      });
+                                    },
                                   );
                                 }),
-                            )
-                          ]
-                          
+                              ),
+                              const SizedBox(height: 20),
+                              ElevatedButton(
+                                onPressed: () {
+                                  var resultData = getSelectedIngredients();
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => MultiProvider(
+                                        providers: [
+                                          Provider.value(
+                                              value: myProvider.allRecipes),
+                                          Provider.value(
+                                              value: allergensProvider.allergens),
+                                          Provider.value(
+                                              value: allergensProvider.restrictions),
+                                        ],
+                                        child: SelectedIngredientsResult(
+                                          resultData: resultData,
+                                          recipes: myProvider.allRecipes,
+                                          allergens: allergensProvider.allergens,
+                                          restrictions:
+                                              allergensProvider.restrictions,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: const Text('Submit Ingredients'),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
-      ),     
+      ),
     );
   }
 }
