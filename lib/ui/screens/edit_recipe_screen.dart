@@ -198,6 +198,8 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
                     onPressed: () {
                       widget.recipeModel.allergensName = provider.allergensNameController.text;
                       widget.recipeModel.restrictions = provider.restrictionsController.text;
+                      widget.recipeModel.allergenStatement = provider.allergenStatementController.text;
+                      widget.recipeModel.restrictionStatement = provider.restrictionStatementController.text;
                       widget.recipeModel.name = provider.nameController.text;
                       widget.recipeModel.preperationTime = int.parse(
                           provider.preperationTimeController.text != ''
@@ -215,6 +217,8 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
                       provider.preperationTimeController.clear();
                       provider.instructionsController.clear();
                       provider.ingredientsController.clear();
+                      provider.allergenStatementController.clear();
+                      provider.restrictionStatementController.clear();
                       provider.image = null;
                       Navigator.of(context).pop();
                     },
