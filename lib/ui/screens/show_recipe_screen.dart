@@ -97,7 +97,7 @@ class ShowRecipeScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   const Text(
-                                    'Restrictions',
+                                    'Diet',
                                     style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,

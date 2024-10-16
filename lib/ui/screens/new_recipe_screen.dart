@@ -182,7 +182,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                         maxLines: null,
                         controller: provider.restrictionsController,
                         decoration: InputDecoration(
-                            label: const Text('Restrictions'),
+                            label: const Text('diet'),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15))),
                       ),
@@ -234,6 +234,8 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                       provider.preperationTimeController.clear();
                       provider.instructionsController.clear();
                       provider.ingredientsController.clear();
+                      provider.allergenStatementController.clear();
+                      provider.restrictionStatementController.clear();
                       provider.image = null;
                       Navigator.of(context).pop();
                     },

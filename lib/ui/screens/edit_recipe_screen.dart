@@ -185,7 +185,41 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
                         maxLines: null,
                         controller: provider.restrictionsController,
                         decoration: InputDecoration(
-                            label: const Text('Restrictions'),
+                            label: const Text('Diet'),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15))),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10,),
+
+                  SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: SizedBox(
+                      height: 100,
+                      child: TextField(
+                        expands: true,
+                        maxLines: null,
+                        controller: provider.allergenStatementController,
+                        decoration: InputDecoration(
+                            label: const Text('Allergen Statement'),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15))),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10,),
+
+                  SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: SizedBox(
+                      height: 100,
+                      child: TextField(
+                        expands: true,
+                        maxLines: null,
+                        controller: provider.restrictionStatementController,
+                        decoration: InputDecoration(
+                            label: const Text('Restriction Statement'),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15))),
                       ),
