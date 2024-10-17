@@ -47,29 +47,29 @@ class ProfilePage extends StatelessWidget {
                       Navigator.push(context, MaterialPageRoute(builder: (context) => WelcomePage()));
                     },
                   ),
-                  myProvider.isDark
-                      ? ListTile(
-                          title: const Text('Change Theme'),
-                          leading: const Icon(
-                            Icons.light_mode_outlined,
-                            color: Colors.black,
-                          ),
-                          onTap: () {
-                            Provider.of<RecipeClass>(context, listen: false).changeIsDark();
+                  //myProvider.isDark
+                    //  ? ListTile(
+                     //     title: const Text('Change Theme'),
+                     //     leading: const Icon(
+                     //       Icons.light_mode_outlined,
+                     //       color: Colors.black,
+                     //     ),
+                     //     onTap: () {
+                   //         Provider.of<RecipeClass>(context, listen: false).changeIsDark();
                             
-                          },
-                        )
-                      : ListTile(
-                          title: const Text('Change Theme'),
-                          leading: const Icon(
-                            Icons.dark_mode_outlined,
-                            color: Colors.black,
-                          ),
-                          onTap: () {
-                            Provider.of<RecipeClass>(context, listen: false).changeIsDark();
+                    //      },
+                   //     )
+                  //    : ListTile(
+                  //        title: const Text('Change Theme'),
+                  //        leading: const Icon(
+                  //          Icons.dark_mode_outlined,
+                  //          color: Colors.black,
+                  //        ),
+                   //       onTap: () {
+                   //         Provider.of<RecipeClass>(context, listen: false).changeIsDark();
                             
-                          },
-                        ),
+                   //       },
+                  //      ),
                 ],
               ),
             ),

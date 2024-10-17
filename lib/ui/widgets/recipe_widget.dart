@@ -71,7 +71,7 @@ class _NewRecipeWidgetState extends State<RecipeWidget> {
                     BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
                       child: Container(
-                        height: 40,
+                        height: 45,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
                           gradient: LinearGradient(

@@ -9,16 +9,16 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
       splash: const CircleAvatar(
-        radius: 70,
+        radius: 500,
         backgroundColor: Colors.blue,
         child: CircleAvatar(
           backgroundImage: AssetImage('images/logo.png'),
-          radius: 40,
+          radius: 50,
         ),
       ),
       nextScreen: WelcomePage(),
-      splashTransition: SplashTransition.rotationTransition,
-      backgroundColor: Colors.black,
+      splashTransition: SplashTransition.fadeTransition,
+      backgroundColor: Colors.lightGreen,
     );
   }
 }

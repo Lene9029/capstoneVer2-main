@@ -201,7 +201,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           image: DecorationImage(image: AssetImage(controller.items[0].image),
           fit: BoxFit.cover)
         ),
-        child: const Text('Nutritious Recipe App')
+        child: const Align(
+          alignment: Alignment.center,
+          child: Text('Nutritious Recipe App',
+          style:TextStyle(fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black)))
       );
     
   }
@@ -329,16 +334,39 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
   Widget _buildPage4() {
-  return Center(
-    child: ElevatedButton(
-      onPressed: _nextPage, 
-      child: const Text(
-        'Let\'s Get Started',
-        style: TextStyle(fontSize: 30),
+  return Container(
+    height: double.infinity,
+    width: double.infinity,
+    decoration: const BoxDecoration(
+      image: DecorationImage(
+        image: AssetImage('images/start.jpg'),
+        fit: BoxFit.cover,
       ),
+    ),
+    child: Column(
+      children: [
+        const Spacer(), 
+        Padding(
+          padding: const EdgeInsets.only(bottom: 100), 
+          child: ElevatedButton(
+            onPressed: _nextPage,
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.white, backgroundColor: Colors.lightGreen, 
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10), 
+              shape: const  RoundedRectangleBorder(
+                borderRadius: BorderRadius.zero,
+              ),
+            ),
+            child: const Text(
+              'Let\'s Get Started',
+              style: TextStyle(fontSize: 30),
+            ),
+          ),
+        ),
+      ],
     ),
   );
 }
-}
 
+}
   

@@ -151,7 +151,7 @@ Widget build(BuildContext context) {
         ),
               Positioned(
                 top: 8,
-                left: 10,
+                left: 8,
                 child: IconButton(
                           icon: const Icon(Icons.arrow_back_ios_new,
                           color: Colors.black,),

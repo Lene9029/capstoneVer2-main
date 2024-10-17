@@ -96,7 +96,7 @@ class _HomeScreenState extends State<DetectObjectPage> {
         title: const Text('Ingredient Detection'),
         automaticallyImplyLeading: false,
         centerTitle: true,
-        backgroundColor: Colors.teal,
+        backgroundColor: Colors.lightGreen,
       ),
       body: Center(
         child: Padding(
@@ -123,7 +123,7 @@ class _HomeScreenState extends State<DetectObjectPage> {
               ElevatedButton(
                 onPressed: runObjectDetection,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal, 
+                  backgroundColor: Colors.lightGreen, 
                   padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30), 
@@ -162,7 +162,7 @@ class _HomeScreenState extends State<DetectObjectPage> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal, 
+                  backgroundColor: Colors.lightGreen, 
                   padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30), 
