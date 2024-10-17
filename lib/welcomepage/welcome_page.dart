@@ -194,7 +194,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
      
   }
 
-
 Widget _buildPage1() {
   return Container(
     decoration: BoxDecoration(
