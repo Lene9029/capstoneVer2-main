@@ -193,23 +193,59 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
      
   }
-  
-  Widget _buildPage1() {
-    return 
-     Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage(controller.items[0].image),
-          fit: BoxFit.cover)
+
+
+Widget _buildPage1() {
+  return Container(
+    decoration: BoxDecoration(
+      image: DecorationImage(
+        image: AssetImage(controller.items[0].image),
+        fit: BoxFit.cover,
+      ),
+    ),
+    child: Align(
+      alignment: const Alignment(0, 0.7), 
+      child: ClipRect(
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              color: Colors.white.withOpacity(0.2), 
+              child: const Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Nutritious Recipe App',
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(height: 20),
+          
+                  Text(
+                    'Say goodbye to recipe frustration! Nutritious Recipe brings you a world of delicious Filipino dishes, all filtered for your dietary needs and food allergens.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
-        child: const Align(
-          alignment: Alignment.center,
-          child: Text('Nutritious Recipe App',
-          style:TextStyle(fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black)))
-      );
-    
-  }
+      ),
+    ),
+  );
+}
+
+
 
   Widget _buildPage2() {
     return Scaffold(
@@ -343,30 +379,39 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         fit: BoxFit.cover,
       ),
     ),
-    child: Column(
+    child: Stack(
       children: [
-        const Spacer(), 
-        Padding(
-          padding: const EdgeInsets.only(bottom: 100), 
-          child: ElevatedButton(
-            onPressed: _nextPage,
-            style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.white, backgroundColor: Colors.lightGreen, 
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10), 
-              shape: const  RoundedRectangleBorder(
-                borderRadius: BorderRadius.zero,
+        Container(
+          color: Colors.black.withOpacity(0.7), 
+        ),
+        Column(
+          children: [
+            const Spacer(), 
+            Padding(
+              padding: const EdgeInsets.only(bottom: 100), 
+              child: Center(
+                child: ElevatedButton(
+                  onPressed: _nextPage,
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white, 
+                    backgroundColor: Colors.lightGreen, 
+                    padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10), 
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero,
+                    ),
+                  ),
+                  child: const Text(
+                    'Let\'s Get Started',
+                    style: TextStyle(fontSize: 30),
+                  ),
+                ),
               ),
             ),
-            child: const Text(
-              'Let\'s Get Started',
-              style: TextStyle(fontSize: 30),
-            ),
-          ),
+          ],
         ),
       ],
     ),
   );
 }
-
 }
   
