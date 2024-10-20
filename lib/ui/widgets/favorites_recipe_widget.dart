@@ -38,7 +38,7 @@ class FavoritesRecipe extends StatelessWidget {
             tileColor: !Provider.of<RecipeClass>(context).isDark
                 ? Colors.blue[100]
                 : null,
-            leading: recipeModel.image == null
+            leading: recipeModel.imagePath == null
                 ? Container(
                     decoration: BoxDecoration(
                         color: !Provider.of<RecipeClass>(context).isDark
@@ -51,8 +51,8 @@ class FavoritesRecipe extends StatelessWidget {
                         child: CircleAvatar(
                       backgroundImage: AssetImage('images/food_logo.png'),
                     )))
-                : Image.file(
-                    recipeModel.image!,
+                : Image.asset(
+                    recipeModel.imagePath ?? '',
                     width: 100,
                     height: double.infinity,
                   ),

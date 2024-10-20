@@ -381,7 +381,7 @@ Widget _buildPage1() {
     child: Stack(
       children: [
         Container(
-          color: Colors.black.withOpacity(0.7), 
+          color: Colors.black.withOpacity(0.5), 
         ),
         Column(
           children: [

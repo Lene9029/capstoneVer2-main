@@ -1,6 +1,9 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 
+import 'package:flutter/services.dart';
+import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:recipe_page_new/models/recipe_model.dart';
 import 'package:sqflite/sqflite.dart';
@@ -36,28 +39,33 @@ class DbHelper {
   } 
       
   Future<Database> connectToDatabase() async {
-    Directory directory = await getApplicationDocumentsDirectory();
-    String path = '${directory.path}/recipes.db';
-    return openDatabase(
-      path,
-      version: 1,
-      onCreate: (db, version) {
-        db.execute(
-            'CREATE TABLE $tableName ($idColumn INTEGER PRIMARY KEY AUTOINCREMENT, $nameColumn TEXT, $preperationTimeColumn INTEGER, $isFavoriteColumn INTEGER, $ingredientsColumn TEXT, $instructionsColumn TEXT, $imageColumn TEXT, $allergensName TEXT, $restrictions TEXT, $allergenStatement TEXT, $restrictionStatement TEXT)');
-            
-      },
-      onUpgrade: (db, oldVersion, newVersion) {
-        db.execute(
-            'CREATE TABLE $tableName ($idColumn INTEGER PRIMARY KEY AUTOINCREMENT, $nameColumn TEXT, $preperationTimeColumn INTEGER, $isFavoriteColumn INTEGER, $ingredientsColumn TEXT, $instructionsColumn TEXT, $imageColumn TEXT, $allergensName TEXT, $restrictions TEXT, $allergenStatement TEXT, $restrictionStatement TEXT)');
-        
-      },
-      onDowngrade: (db, oldVersion, newVersion) {
-        db.delete(tableName);
-        
-      },
+  Directory documentsDirectory = await getApplicationDocumentsDirectory();
+  String dbPath = join(documentsDirectory.path, 'recipesdb.db');
 
-    );
+  bool dbExists = await File(dbPath).exists();
+
+  if (!dbExists) {
+    ByteData data = await rootBundle.load('assets/recipedb.db');
+    List<int> bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+
+    await File(dbPath).writeAsBytes(bytes, flush: true);
   }
+
+  return openDatabase(
+    dbPath,
+    version: 3,
+    onCreate: (db, version) {
+      db.execute(
+        'CREATE TABLE IF NOT EXISTS $tableName ($idColumn INTEGER PRIMARY KEY AUTOINCREMENT, $nameColumn TEXT, $preperationTimeColumn INTEGER, $isFavoriteColumn INTEGER, $ingredientsColumn TEXT, $instructionsColumn TEXT, $imageColumn TEXT, $allergensName TEXT, $restrictions TEXT, $allergenStatement TEXT, $restrictionStatement TEXT)',
+      );
+    },
+    onUpgrade: (db, oldVersion, newVersion) {
+      db.execute(
+        'CREATE TABLE IF NOT EXISTS $tableName ($idColumn INTEGER PRIMARY KEY AUTOINCREMENT, $nameColumn TEXT, $preperationTimeColumn INTEGER, $isFavoriteColumn INTEGER, $ingredientsColumn TEXT, $instructionsColumn TEXT, $imageColumn TEXT, $allergensName TEXT, $restrictions TEXT, $allergenStatement TEXT, $restrictionStatement TEXT)',
+      );
+    },
+  );
+}
   
    
 
@@ -87,7 +95,7 @@ class DbHelper {
           isFavoriteColumn: recipeModel.isFavorite ? 1 : 0,
           nameColumn: recipeModel.name,
           preperationTimeColumn: recipeModel.preperationTime,
-          imageColumn: recipeModel.image?.path,
+          imageColumn: recipeModel.imagePath,
           ingredientsColumn: recipeModel.ingredients,
           instructionsColumn: recipeModel.instructions,
           allergensName: recipeModel.allergensName,

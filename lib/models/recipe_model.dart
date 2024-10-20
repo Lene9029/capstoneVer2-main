@@ -4,7 +4,7 @@ class RecipeModel {
   int? id;
   late String name;
   late bool isFavorite;
-  File? image;
+  late String? imagePath;
   late int preperationTime;
   late String ingredients;
   late String instructions;
@@ -19,7 +19,7 @@ class RecipeModel {
     this.id,
     required this.name,
     required this.isFavorite,
-    this.image,
+    this.imagePath,
     required this.preperationTime,
     required this.ingredients,
     required this.instructions,
@@ -40,7 +40,7 @@ class RecipeModel {
       'preperationTime': preperationTime,
       'ingredients': ingredients,
       'instructions': instructions,
-      'image': image == null ? '' : image!.path,
+      'image': imagePath,
       'allergenName': allergensName,
       'restrictions': restrictions,
       'allergenStatement': allergenStatement,
@@ -60,7 +60,7 @@ class RecipeModel {
         restrictions: map['restrictions'],
         allergenStatement: map['allergenStatement'] ?? '',
         restrictionStatement: map['restrictionStatement'] ?? '',
-        image: map['image'] != null ? File(map['image']) : null);
+        imagePath: map['image']);
         
   }
 }

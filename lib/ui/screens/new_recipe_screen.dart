@@ -227,7 +227,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      provider.insertNewRecipe();
+                      //provider.insertNewRecipe();
                       provider.allergensNameController.clear();
                       provider.restrictionsController.clear();
                       provider.nameController.clear();

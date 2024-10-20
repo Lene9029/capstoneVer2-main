@@ -36,23 +36,23 @@ class RecipeClass extends ChangeNotifier {
     notifyListeners();
   }
 
-  insertNewRecipe() {
-    RecipeModel recipeModel = RecipeModel(
-        name: nameController.text,
-        isFavorite: false,
-        image: image,
-        ingredients: ingredientsController.text,
-        instructions: instructionsController.text,
-        allergensName: allergensNameController.text,
-        restrictions: restrictionsController.text,
-        allergenStatement: allergenStatementController.text,
-        restrictionStatement: restrictionStatementController.text,
-        preperationTime: int.parse(preperationTimeController.text != ''
-            ? preperationTimeController.text
-            : '0'));
-    DbHelper.dbHelper.insertNewRecipe(recipeModel);
-    getRecipes();
-  }
+  //insertNewRecipe() {
+    //RecipeModel recipeModel = RecipeModel(
+        //name: nameController.text,
+        //isFavorite: false,
+        //imagePath: imagePath,
+        //ingredients: ingredientsController.text,
+        //instructions: instructionsController.text,
+        //allergensName: allergensNameController.text,
+        //restrictions: restrictionsController.text,
+        //allergenStatement: allergenStatementController.text,
+       // restrictionStatement: restrictionStatementController.text,
+        //preperationTime: int.parse(preperationTimeController.text != ''
+           // ? preperationTimeController.text
+            //: '0'));
+    //DbHelper.dbHelper.insertNewRecipe(recipeModel);
+    //getRecipes();
+  //}
 
   updateRecipe(RecipeModel recipeModel) async {
     await DbHelper.dbHelper.updateRecipe(recipeModel);

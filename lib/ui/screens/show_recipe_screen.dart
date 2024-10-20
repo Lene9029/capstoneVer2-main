@@ -24,11 +24,11 @@ class ShowRecipeScreen extends StatelessWidget {
                     top: MediaQuery.of(context).size.width,
                     child: Column(
                       children: [
-                        if (recipeModel.image != null)
+                        if (recipeModel.imagePath != null)
                           ClipRRect(
                             borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(16), bottomRight: Radius.circular(16)),
-                            child: Image.file(
-                              recipeModel.image!,
+                            child: Image.asset(
+                              recipeModel.imagePath ?? '',
                               fit: BoxFit.cover,
                             ),
                           )
@@ -191,7 +191,7 @@ class ShowRecipeScreen extends StatelessWidget {
                                     recipeModel.ingredients;
                                 provider.instructionsController.text =
                                     recipeModel.instructions;
-                                provider.image = recipeModel.image;
+                                recipeModel.imagePath;
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(

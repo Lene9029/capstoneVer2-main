@@ -34,14 +34,14 @@ class _NewRecipeWidgetState extends State<RecipeWidget> {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(16),
-              child: widget.recipeModel.image == null
+              child: widget.recipeModel.imagePath == null
                   ? const Center(
                       child: CircleAvatar(
                         backgroundImage: AssetImage('images/Logo.png'),
                       ),
                     )
-                  : Image.file(
-                      widget.recipeModel.image!,
+                  : Image.asset(
+                      widget.recipeModel.imagePath ?? '',
                       fit: BoxFit.cover, 
                       width: double.infinity, 
                       height: double.infinity, 

@@ -239,7 +239,7 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
                           provider.preperationTimeController.text != ''
                               ? provider.preperationTimeController.text
                               : '0');
-                      widget.recipeModel.image = provider.image;
+                     // widget.recipeModel.image = provider.image;
                       widget.recipeModel.ingredients =
                           provider.ingredientsController.text;
                       widget.recipeModel.instructions =
