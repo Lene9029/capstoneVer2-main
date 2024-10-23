@@ -13,7 +13,6 @@ class SelecIgredientsPage extends StatefulWidget {
 }
 
 class _SeelecIgredientsPageState extends State<SelecIgredientsPage> {
-  // Split ingredients into two categories
   final List<String> _meatIngredients = [
     'beef', 'beef-intestines', 'beef-kidney', 'beef-ribs', 'beef-tail', 
     'beef-tripe', 'chicken', 'pork-heart', 'pork-liver', 'pork-loin', 
@@ -41,14 +40,12 @@ class _SeelecIgredientsPageState extends State<SelecIgredientsPage> {
   List<String> getSelectedIngredients() {
     List<String> selectedIngredients = [];
 
-    // Add selected meat ingredients
     for (int i = 0; i < _meatIngredients.length; i++) {
       if (_selectedMeatChoices[i]) {
         selectedIngredients.add(_meatIngredients[i]);
       }
     }
 
-    // Add selected fruits & vegetables ingredients
     for (int i = 0; i < _fruitVegIngredients.length; i++) {
       if (_selectedFruitVegChoices[i]) {
         selectedIngredients.add(_fruitVegIngredients[i]);
@@ -93,8 +90,6 @@ class _SeelecIgredientsPageState extends State<SelecIgredientsPage> {
                                     fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(height: 20),
-
-                              // Combined Ingredients Section
                               Container(
                                 decoration: BoxDecoration(
                                   color: Colors.white.withOpacity(1.0),
@@ -104,7 +99,6 @@ class _SeelecIgredientsPageState extends State<SelecIgredientsPage> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    // Meat Ingredients Section
                                     const Text(
                                       'Meat Ingredients',
                                       style: TextStyle(
@@ -142,8 +136,6 @@ class _SeelecIgredientsPageState extends State<SelecIgredientsPage> {
                                     ),
 
                                     const SizedBox(height: 20),
-
-                                    // Fruits & Vegetables Ingredients Section
                                     const Text(
                                       'Fruits & Vegetables',
                                       style: TextStyle(
