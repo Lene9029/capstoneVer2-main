@@ -141,7 +141,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _nextPage() {
-    if (_currentPage < 3) {
+    if (_currentPage < 2) {
       _pageController.animateToPage(
         _currentPage + 1,
         duration: Duration(milliseconds: 300),
@@ -179,12 +179,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             _buildPage1(),
             _buildPage2(),
             _buildPage3(),
-            _buildPage4(),
           ],
         ),
         Container(alignment: const Alignment(0, 0.85),
           child: 
-          SmoothPageIndicator(controller: _pageController, count: 4,
+          SmoothPageIndicator(controller: _pageController, count: 3,
           effect:  const WormEffect(
             activeDotColor: Colors.green
           )),         
@@ -246,50 +245,68 @@ Widget _buildPage1() {
 
 
 
-  Widget _buildPage2() {
-    return Scaffold(
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        decoration: const BoxDecoration(
-           image: DecorationImage(image: AssetImage('images/allergy.jpg'),
-           fit: BoxFit.cover),           
+ Widget _buildPage2() {
+  return Scaffold(
+    body: Container(
+      height: double.infinity,
+      width: double.infinity,
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('images/allergy.jpg'),
+          fit: BoxFit.cover,
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+      ),
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 40),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
+                  child: Container(
+                    color: Colors.grey.withOpacity(0.3), 
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           const Text(
-                            'What Are Your Allergens?',
-                            style: TextStyle(fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
+                            'What Are Your Allergies?',
+                            style: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
                           ),
                           const SizedBox(height: 20),
                           Wrap(
-                            spacing: 8.0,
+                            spacing: 1.0,
+                            runSpacing: 1.0,
                             children: List<Widget>.generate(
                               _allergenchoices.length,
                               (int index) {
-                                return ChoiceChip(
-                                  label: Text(_allergenchoices[index]),
-                                  selected: _selectedAllergenChoices[index],
-                                  onSelected: (bool selected) {
-                                    setState(() {
-                                      _selectedAllergenChoices[index] = selected;
-                                    });
-                                  },
+                                return SizedBox(
+                                  width: MediaQuery.of(context).size.width / 2 - 30,
+                                  height: 52,
+                                  child: CheckboxListTile(
+                                    title: Text(
+                                      _allergenchoices[index],
+                                      style: const TextStyle(color: Colors.black),
+                                    ),
+                                    value: _selectedAllergenChoices[index],
+                                    onChanged: (bool? selected) {
+                                      setState(() {
+                                        _selectedAllergenChoices[index] = selected ?? false;
+                                      });
+                                    },
+                                    activeColor: Colors.green,
+                                    controlAffinity: ListTileControlAffinity.leading,
+                                    contentPadding: EdgeInsets.zero,
+                                  ),
                                 );
                               },
                             ).toList(),
@@ -300,75 +317,81 @@ Widget _buildPage1() {
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+              const SizedBox(height: 40),
 
-  Widget _buildPage3(){
-    return Scaffold(
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        decoration: const BoxDecoration(
-          image: DecorationImage(image: AssetImage('images/diet.jpg'),
-          fit: BoxFit.cover)
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Expanded(
-                child: Center(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(                      
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            const Text('What Are Your Diets?',
-                            style: TextStyle(fontSize: 30,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
+                  child: Container(
+                    color: Colors.grey.withOpacity(0.3), 
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          const Text(
+                            'What Are Your Diets?',
+                            style: TextStyle(
+                              fontSize: 30,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
                             ),
-                            const SizedBox(height: 20,),
-                            Wrap(
-                              spacing: 8.0,
-                              children: List<Widget>.generate(
-                                restrictionsChoices.length, 
-                                (int index) {
-                                  return ChoiceChip(label: Text(restrictionsChoices[index]),
-                                   selected: _selectedRestrictionsChoices[index],
-                                   onSelected: (bool selected){
-                                    setState(() {
-                                      _selectedRestrictionsChoices[index] = selected;
-                                    });
-                                   },
-                                  );
-                                }),
-                            )
-                          ]
-                          
-                        ),
+                          ),
+                          const SizedBox(height: 20),
+                          Wrap(
+                            spacing: 1.0,
+                            runSpacing: 1.0,
+                            children: List<Widget>.generate(
+                              restrictionsChoices.length,
+                              (int index) {
+                                return SizedBox(
+                                  width: MediaQuery.of(context).size.width / 2 - 30,
+                                  height: 52,
+                                  child: CheckboxListTile(
+                                    title: Text(
+                                      restrictionsChoices[index],
+                                      style: const TextStyle(color: Colors.black), // Change text color to white for visibility
+                                    ),
+                                    value: _selectedRestrictionsChoices[index],
+                                    onChanged: (bool? selected) {
+                                      setState(() {
+                                        _selectedRestrictionsChoices[index] = selected ?? false;
+                                      });
+                                    },
+                                    activeColor: Colors.green,
+                                    controlAffinity: ListTileControlAffinity.leading,
+                                    contentPadding: EdgeInsets.zero,
+                                  ),
+                                );
+                              },
+                            ).toList(),
+                          ),
+                        ],
                       ),
                     ),
                   ),
                 ),
               ),
+              const SizedBox(height: 80),
             ],
           ),
         ),
-      ),     
-    );
-  }
-  Widget _buildPage4() {
+      ),
+    ),
+  );
+}
+
+
+
+
+
+
+
+
+
+
+  Widget _buildPage3() {
   return Container(
     height: double.infinity,
     width: double.infinity,
@@ -381,7 +404,7 @@ Widget _buildPage1() {
     child: Stack(
       children: [
         Container(
-          color: Colors.black.withOpacity(0.5), 
+          color: Colors.black.withOpacity(0.4), 
         ),
         Column(
           children: [

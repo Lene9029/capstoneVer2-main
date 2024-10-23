@@ -40,7 +40,7 @@ class DbHelper {
       
   Future<Database> connectToDatabase() async {
   Directory documentsDirectory = await getApplicationDocumentsDirectory();
-  String dbPath = join(documentsDirectory.path, 'recipesdb.db');
+  String dbPath = join(documentsDirectory.path, 'recipes.db');
 
   bool dbExists = await File(dbPath).exists();
 
@@ -53,13 +53,14 @@ class DbHelper {
 
   return openDatabase(
     dbPath,
-    version: 3,
+    version: 1,
     onCreate: (db, version) {
       db.execute(
         'CREATE TABLE IF NOT EXISTS $tableName ($idColumn INTEGER PRIMARY KEY AUTOINCREMENT, $nameColumn TEXT, $preperationTimeColumn INTEGER, $isFavoriteColumn INTEGER, $ingredientsColumn TEXT, $instructionsColumn TEXT, $imageColumn TEXT, $allergensName TEXT, $restrictions TEXT, $allergenStatement TEXT, $restrictionStatement TEXT)',
       );
     },
     onUpgrade: (db, oldVersion, newVersion) {
+      db.execute('DROP TABLE IF EXISTS $tableName');
       db.execute(
         'CREATE TABLE IF NOT EXISTS $tableName ($idColumn INTEGER PRIMARY KEY AUTOINCREMENT, $nameColumn TEXT, $preperationTimeColumn INTEGER, $isFavoriteColumn INTEGER, $ingredientsColumn TEXT, $instructionsColumn TEXT, $imageColumn TEXT, $allergensName TEXT, $restrictions TEXT, $allergenStatement TEXT, $restrictionStatement TEXT)',
       );

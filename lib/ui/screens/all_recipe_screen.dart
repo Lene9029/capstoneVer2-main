@@ -25,14 +25,6 @@ class _MainRecipeScreenState extends State<MainRecipeScreen> {
   Widget build(BuildContext context) {
     return Consumer<RecipeClass>(
       builder: (BuildContext context, myProvider, Widget? child) => Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: (() async {
-            await Navigator.pushNamed(context, '/new_recipe_screen');
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const MainPage()));
-            
-          }),
-          child: const Icon(Icons.add),
-        ),
         body: SafeArea(
           child: Column(
             children: [

@@ -1,9 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:recipe_page_new/data_repository/item_dbHelper.dart';
 import 'package:recipe_page_new/providers/alleres_provider.dart';
-import 'package:recipe_page_new/providers/item_provider.dart';
 import 'package:recipe_page_new/providers/recipe_provider.dart';
 import 'package:recipe_page_new/ui/screens/favorite_recipes_screen.dart';
 import 'package:recipe_page_new/ui/screens/all_recipe_screen.dart';
@@ -16,7 +14,7 @@ import 'data_repository/dbHelper.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DbHelper.dbHelper.initDatabase();
-  await ItemDbHelper.dbHelper.initDatabase();
+ 
   runApp(const MyApp());
 }
 
@@ -28,8 +26,6 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [ChangeNotifierProvider<RecipeClass>(
           create: (context) => RecipeClass(),),
-          ChangeNotifierProvider<ItemClass>(
-          create: (context) => ItemClass(),),
           ChangeNotifierProvider<AlleresProvider>(
           create: (context) => AlleresProvider(),),
           ],

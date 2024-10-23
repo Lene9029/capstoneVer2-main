@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:recipe_page_new/Selected_Ingredients_Result.dart';
@@ -14,98 +13,49 @@ class SelecIgredientsPage extends StatefulWidget {
 }
 
 class _SeelecIgredientsPageState extends State<SelecIgredientsPage> {
-  final List<String> _ingredientchoices = [
-    'ampalaya',
-    'bangus',
-    'bay-leaves',
-    'beef',
-    'beef-intestines',
-    'beef-kidney',
-    'beef-ribs',
-    'beef-tail',
-    'beef-tripe',
-    'bokchoy',
-    'breadcrumbs',
-    'broccoli',
-    'brown-sugar',
-    'butter',
-    'cabbage',
-    'calamansi',
-    'cashew-nuts',
-    'cauliflower',
-    'celery',
-    'cellophane noodles',
-    'chayote',
-    'chicharon',
-    'chicken',
-    'chicken-bouillon-granules',
-    'chickpeas',
-    'chorizo',
-    'cloves',
-    'corn',
-    'dried-shitake-mushrooms',
-    'egg',
-    'eggplant',
-    'garlic',
-    'ginger',
-    'green-beans',
-    'ham',
-    'hotdog',
-    'kanduli',
-    'kangkong',
-    'lemon',
-    'lumpia-wrapper',
-    'mackerel',
-    'malungay-leaves',
-    'mung-beans',
-    'mussels',
-    'okra',
-    'olive',
-    'onion',
-    'parsley',
-    'pata',
-    'pork-heart',
-    'pork-liver',
-    'pork-loin',
-    'pork-lung',
-    'pork-meat',
-    'pork-ribs',
-    'pork-shoulder',
-    'pork-skin',
-    'potato',
-    'puso-ng-saging',
-    'raisins',
-    'red-chili-pepper',
-    'rice',
-    'saba-banana',
-    'salmon',
-    'sesame-seeds',
-    'singkamas',
-    'sitaw',
-    'spinach',
-    'spring-onions',
+  // Split ingredients into two categories
+  final List<String> _meatIngredients = [
+    'beef', 'beef-intestines', 'beef-kidney', 'beef-ribs', 'beef-tail', 
+    'beef-tripe', 'chicken', 'pork-heart', 'pork-liver', 'pork-loin', 
+    'pork-lung', 'pork-meat', 'pork-ribs', 'pork-shoulder', 'pork-skin'
+  ];
+
+  final List<String> _fruitVegIngredients = [
+    'ampalaya', 'bangus', 'bay-leaves', 'bokchoy', 'broccoli', 'calamansi', 
+    'cauliflower', 'celery', 'chayote', 'eggplant', 'garlic', 'ginger', 
+    'green-beans', 'kangkong', 'lemon', 'malungay-leaves', 'mung-beans', 
+    'okra', 'onion', 'parsley', 'potato', 'spinach', 'spring-onions', 
     'tomato'
   ];
 
-  late List<bool> _selectedIngredientChoices = [];
+  late List<bool> _selectedMeatChoices;
+  late List<bool> _selectedFruitVegChoices;
 
   @override
   void initState() {
     super.initState();
-    _selectedIngredientChoices =
-        List<bool>.filled(_ingredientchoices.length, false);
+    _selectedMeatChoices = List<bool>.filled(_meatIngredients.length, false);
+    _selectedFruitVegChoices = List<bool>.filled(_fruitVegIngredients.length, false);
   }
 
   List<String> getSelectedIngredients() {
-    List<String> selectedIngredientChoices = [];
+    List<String> selectedIngredients = [];
 
-    for (int i = 0; i < _ingredientchoices.length; i++) {
-      if (_selectedIngredientChoices[i]) {
-        selectedIngredientChoices.add(_ingredientchoices[i]);
+    // Add selected meat ingredients
+    for (int i = 0; i < _meatIngredients.length; i++) {
+      if (_selectedMeatChoices[i]) {
+        selectedIngredients.add(_meatIngredients[i]);
       }
     }
 
-    return selectedIngredientChoices;
+    // Add selected fruits & vegetables ingredients
+    for (int i = 0; i < _fruitVegIngredients.length; i++) {
+      if (_selectedFruitVegChoices[i]) {
+        selectedIngredients.add(_fruitVegIngredients[i]);
+      }
+    }
+
+    return selectedIngredients;
   }
 
   @override
@@ -120,7 +70,7 @@ class _SeelecIgredientsPageState extends State<SelecIgredientsPage> {
           width: double.infinity,
           child: Padding(
             padding: const EdgeInsets.all(10),
-            child: SingleChildScrollView( // Add SingleChildScrollView here
+            child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -143,23 +93,98 @@ class _SeelecIgredientsPageState extends State<SelecIgredientsPage> {
                                     fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(height: 20),
-                              Wrap(
-                                spacing: 8.0,
-                                children: List<Widget>.generate(
-                                    _ingredientchoices.length, (int index) {
-                                  return ChoiceChip(
-                                    label: Text(_ingredientchoices[index]),
-                                    selected: _selectedIngredientChoices[index],
-                                    onSelected: (bool selected) {
-                                      setState(() {
-                                        _selectedIngredientChoices[index] =
-                                            selected;
-                                      });
-                                    },
-                                  );
-                                }),
+
+                              // Combined Ingredients Section
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(1.0),
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                padding: const EdgeInsets.all(10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    // Meat Ingredients Section
+                                    const Text(
+                                      'Meat Ingredients',
+                                      style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Wrap(
+                                      spacing: 1.0,
+                                      children: List<Widget>.generate(
+                                          _meatIngredients.length, (int index) {
+                                        return SizedBox(
+                                          width: 175,
+                                          height: 50,
+                                          child: CheckboxListTile(
+                                            title: Text(
+                                              _meatIngredients[index],
+                                              style: const TextStyle(
+                                                  color: Colors.black),
+                                            ),
+                                            value: _selectedMeatChoices[index],
+                                            onChanged: (bool? selected) {
+                                              setState(() {
+                                                _selectedMeatChoices[index] =
+                                                    selected ?? false;
+                                              });
+                                            },
+                                            activeColor: Colors.green,
+                                            controlAffinity:
+                                                ListTileControlAffinity.leading,
+                                          ),
+                                        );
+                                      }),
+                                    ),
+
+                                    const SizedBox(height: 20),
+
+                                    // Fruits & Vegetables Ingredients Section
+                                    const Text(
+                                      'Fruits & Vegetables',
+                                      style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Wrap(
+                                      spacing: 1.0,
+                                      children: List<Widget>.generate(
+                                          _fruitVegIngredients.length,
+                                          (int index) {
+                                        return SizedBox(
+                                          width: 175,
+                                          height: 50,
+                                          child: CheckboxListTile(
+                                            title: Text(
+                                              _fruitVegIngredients[index],
+                                              style: const TextStyle(
+                                                  color: Colors.black),
+                                            ),
+                                            value: _selectedFruitVegChoices[index],
+                                            onChanged: (bool? selected) {
+                                              setState(() {
+                                                _selectedFruitVegChoices[index] =
+                                                    selected ?? false;
+                                              });
+                                            },
+                                            activeColor: Colors.green,
+                                            controlAffinity:
+                                                ListTileControlAffinity.leading,
+                                          ),
+                                        );
+                                      }),
+                                    ),
+                                  ],
+                                ),
                               ),
                               const SizedBox(height: 20),
+
                               ElevatedButton(
                                 onPressed: () {
                                   var resultData = getSelectedIngredients();
@@ -178,15 +203,14 @@ class _SeelecIgredientsPageState extends State<SelecIgredientsPage> {
                                           resultData: resultData,
                                           recipes: myProvider.allRecipes,
                                           allergens: allergensProvider.allergens,
-                                          restrictions:
-                                              allergensProvider.restrictions,
+                                          restrictions: allergensProvider.restrictions,
                                         ),
                                       ),
                                     ),
                                   );
                                 },
                                 child: const Text('Submit Ingredients'),
-                              )
+                              ),
                             ],
                           ),
                         ),

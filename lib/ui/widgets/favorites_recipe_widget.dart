@@ -49,7 +49,7 @@ class FavoritesRecipe extends StatelessWidget {
                     width: 100,
                     child: const Center(
                         child: CircleAvatar(
-                      backgroundImage: AssetImage('images/food_logo.png'),
+                      backgroundImage: AssetImage('images/logo.png'),
                     )))
                 : Image.asset(
                     recipeModel.imagePath ?? '',
