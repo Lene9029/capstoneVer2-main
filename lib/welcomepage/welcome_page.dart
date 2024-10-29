@@ -242,10 +242,10 @@ Widget _buildPage1() {
     ),
   );
 }
+Widget _buildPage2() {
+  const int maxAllergies = 3;
+  const int maxDiets = 3;     
 
-
-
- Widget _buildPage2() {
   return Scaffold(
     body: Container(
       height: double.infinity,
@@ -268,7 +268,7 @@ Widget _buildPage1() {
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
                   child: Container(
-                    color: Colors.grey.withOpacity(0.3), 
+                    color: Colors.grey.withOpacity(0.3),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
@@ -300,7 +300,14 @@ Widget _buildPage1() {
                                     value: _selectedAllergenChoices[index],
                                     onChanged: (bool? selected) {
                                       setState(() {
-                                        _selectedAllergenChoices[index] = selected ?? false;
+                                        if (selected == true &&
+                                            _selectedAllergenChoices.where((c) => c).length >= maxAllergies) {
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            const SnackBar(content: Text('Select up to $maxAllergies allergies only.')),
+                                          );
+                                        } else {
+                                          _selectedAllergenChoices[index] = selected ?? false;
+                                        }
                                       });
                                     },
                                     activeColor: Colors.green,
@@ -318,13 +325,12 @@ Widget _buildPage1() {
                 ),
               ),
               const SizedBox(height: 40),
-
               ClipRRect(
                 borderRadius: BorderRadius.circular(16),
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
                   child: Container(
-                    color: Colors.grey.withOpacity(0.3), 
+                    color: Colors.grey.withOpacity(0.3),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
@@ -351,12 +357,19 @@ Widget _buildPage1() {
                                   child: CheckboxListTile(
                                     title: Text(
                                       restrictionsChoices[index],
-                                      style: const TextStyle(color: Colors.black), // Change text color to white for visibility
+                                      style: const TextStyle(color: Colors.black),
                                     ),
                                     value: _selectedRestrictionsChoices[index],
                                     onChanged: (bool? selected) {
                                       setState(() {
-                                        _selectedRestrictionsChoices[index] = selected ?? false;
+                                        if (selected == true &&
+                                            _selectedRestrictionsChoices.where((c) => c).length >= maxDiets) {
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            const SnackBar(content: Text('Select up to $maxDiets diets only.')),
+                                          );
+                                        } else {
+                                          _selectedRestrictionsChoices[index] = selected ?? false;
+                                        }
                                       });
                                     },
                                     activeColor: Colors.green,
@@ -381,15 +394,6 @@ Widget _buildPage1() {
     ),
   );
 }
-
-
-
-
-
-
-
-
-
 
   Widget _buildPage3() {
   return Container(

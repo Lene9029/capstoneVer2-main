@@ -14,13 +14,12 @@ brown-sugar
 butter
 cabbage
 calamansi
+canola oil
 cashew-nuts
 cauliflower
-celery
 cellophane noodles
 chayote
 chicharon
-chicken
 chicken-bouillon-granules
 chickpeas
 chorizo
@@ -33,27 +32,20 @@ garlic
 ginger
 green-beans
 ham
-hotdog
-kanduli
 kangkong
 lemon
-lumpia-wrapper
-mackerel
 malungay-leaves
 mung-beans
-mussels
 okra
 olive
 onion
-parsley
 pata
 pork-heart
 pork-liver
-pork-loin
+pork-loin 
 pork-lung
 pork-meat
 pork-ribs
-pork-shoulder
 pork-skin
 potato
 puso-ng-saging
@@ -61,7 +53,6 @@ raisins
 red-chili-pepper
 rice
 saba-banana
-salmon
 sesame-seeds
 singkamas
 sitaw

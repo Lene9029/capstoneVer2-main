@@ -37,7 +37,7 @@ class _HomeScreenState extends State<DetectObjectPage> {
     try {
       _objectModel = await FlutterPytorch.loadObjectDetectionModel(
         pathObjectDetectionModel,
-        70,
+        61,
         640,
         640,
         labelPath: "assets/labels/labels.txt",
@@ -52,7 +52,7 @@ class _HomeScreenState extends State<DetectObjectPage> {
   }
 
   Future<void> runObjectDetection() async {
-    final XFile? image = await _picker.pickImage(source: ImageSource.camera);
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
 
     if (image != null) {
       setState(() {

@@ -115,6 +115,12 @@ class _SeelecIgredientsPageState extends State<SelecIgredientsPage> {
                                           width: 175,
                                           height: 50,
                                           child: CheckboxListTile(
+                                            secondary: Image.asset(
+                                              'assets/images/${_meatIngredients[index]}.jpg',
+                                              width: 40,
+                                              height: 40,
+                                              fit: BoxFit.cover,
+                                            ),
                                             title: Text(
                                               _meatIngredients[index],
                                               style: const TextStyle(
@@ -153,6 +159,12 @@ class _SeelecIgredientsPageState extends State<SelecIgredientsPage> {
                                           width: 175,
                                           height: 50,
                                           child: CheckboxListTile(
+                                            secondary: Image.asset(
+                                              'assets/images/${_fruitVegIngredients[index]}.jpg',
+                                              width: 40,
+                                              height: 40,
+                                              fit: BoxFit.cover,
+                                            ),
                                             title: Text(
                                               _fruitVegIngredients[index],
                                               style: const TextStyle(
